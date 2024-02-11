@@ -8,7 +8,7 @@
   are special keys with tap dances and all kinds of fancy stuff
   see below.
   The numbers represent the braille dots, so '1' means 'braille dot 1'
-  
+
   ╭─────────────────╮
   │  TL  1   4  TR  │
   │      2   5      │
@@ -17,27 +17,77 @@
   ╰─────────────────╯
 */
 
-/ {
+#define DEFAULT_LAYER 0
+#define MIRRORED   1
 
+#define TAPPING_TERM 250
+
+/ {
 /* 
 TOP-LEFT: 
     - tap 1: left
-    - tap 2: select correct layer / HOLD: 
+    - tap 2: select correct layer / HOLD: LControl
     - tap 3: switch to bootloader mode 
+TOP-RIGHT: 
+    - tap 1: right
+    - tap 2: select correct layer / HOLD: LAlt
+    - tap 3: switch to bootloader mode 
+BOTTOM-LEFT:
+    - tap 1: SPACE / HOLD: RALT
+    - tap 2: BSPACE
+BOTTOM-RIGHT:
+    - tap 1: ENTER / HOLD: LSHIFT
 */
     behaviors {
-        top_left: tap_dance_0 {
+        hl: hold-layer {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <TAPPING_TERM>;
+            bindings = <&kp>, <&to>;
+        };
+
+        top_left_default: tap_dance_top_left_default {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&kp LEFT>, <&trans>, <&bootloader>;
+            tapping-term-ms = <TAPPING_TERM>;
+            bindings = <&kp LEFT>, <&hl W MIRRORED>, <&bootloader>;
+        };
+        top_left_mirrored: tap_dance_top_left_mirrored {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TAPPING_TERM>;
+            bindings = <&kp LEFT>, <&hl W DEFAULT_LAYER>, <&bootloader>;
+        };
+
+        top_right_default: top_right_default {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TAPPING_TERM>;
+            bindings = <&kp RIGHT>, <&hl X DEFAULT_LAYER>, <&bootloader>;
+        };
+        top_right_mirrored: top_right_mirrored {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TAPPING_TERM>;
+            bindings = <&kp RIGHT>, <&hl X MIRRORED>, <&bootloader>;
+        };
+
+        bottom_left: tap_dance_bottom_left {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TAPPING_TERM>;
+            bindings = <&kp SPACE>, <&kp Y>, <&bootloader>;
+        };
+        bottom_right: tap_dance_bottom_right {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <TAPPING_TERM>;
+            bindings = <&kp ENTER>, <&kp Z>, <&bootloader>;
         };
     };
 
-/* TOP-RIGHt: 
- *  - tap 1: right
- *  - tap 2: select correct layer / HOLD: 
- */
+
 
     keymap {
         compatible = "zmk,keymap";
@@ -45,11 +95,21 @@ TOP-LEFT:
 
         default_layer {
             bindings = <
-    &top_left       &kp B   &kp C   &kp D
-                    &kp E   &kp F
-                    &kp G   &kp H
-    &kp I           &kp J   &kp K   &kp L
+    &top_left_default   &kp N1  &kp N4  &top_right_default
+                        &kp N2  &kp N5
+                        &kp N3  &kp N6
+    &bottom_left        &kp N7  &kp N8  &bottom_right
             >;
         };
+
+        mirrored_layer {
+            bindings = <
+    &top_right_mirrored &kp N4  &kp N1  &top_left_mirrored
+                        &kp N5  &kp N2
+                        &kp N6  &kp N3
+    &bottom_right       &kp N8  &kp N7  &bottom_left
+            >;
+        };
+
     };
 };
