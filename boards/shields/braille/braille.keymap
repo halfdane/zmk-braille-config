@@ -17,9 +17,6 @@
   ╰─────────────────╯
 */
 
-#define DEFAULT_LAYER 0
-#define MIRRORED   1
-
 #define TAPPING_TERM 250
 
 #define DOTS_TIMEOUT 100
@@ -80,6 +77,17 @@
         combo_PERI { key-positions = <D3>;          bindings = <&kp DOT >; timeout-ms = <DOTS_TIMEOUT>; };
         combo_MINU { key-positions = <D3 D6>;       bindings = <&kp MINUS >; timeout-ms = <DOTS_TIMEOUT>; };
         combo_QUOT { key-positions = <D6>;          bindings = <&kp APOSTROPHE >; timeout-ms = <DOTS_TIMEOUT>; };
+
+        combo_1 { key-positions = <D1 D6>;          bindings = <&kp N1 >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_2 { key-positions = <D1 D2 D6>;       bindings = <&kp N2 >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_3 { key-positions = <D1 D4 D6>;       bindings = <&kp N3 >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_4 { key-positions = <D1 D4 D5 D6>;    bindings = <&kp N4 >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_5 { key-positions = <D1 D5 D6>;       bindings = <&kp N5 >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_6 { key-positions = <D1 D2 D4 D6>;    bindings = <&kp N6 >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_7 { key-positions = <D1 D2 D4 D5 D6>; bindings = <&kp N7 >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_8 { key-positions = <D1 D2 D5 D6>;    bindings = <&kp N8 >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_9 { key-positions = <D2 D4 D6>;       bindings = <&kp N9 >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_0 { key-positions = <D3 D4 D6>;       bindings = <&kp N0 >; timeout-ms = <DOTS_TIMEOUT>; };
     };
 };
 
@@ -87,11 +95,11 @@
 /* 
 TOP-LEFT: 
     - tap 1: left
-    - tap 2: select correct layer / HOLD: LControl
+    - tap 2: LControl
     - tap 3: switch to bootloader mode 
 TOP-RIGHT: 
     - tap 1: right
-    - tap 2: select correct layer / HOLD: LAlt
+    - tap 2: LAlt
     - tap 3: switch to bootloader mode 
 BOTTOM-LEFT:
     - tap 1: SPACE / HOLD: RALT
@@ -100,51 +108,31 @@ BOTTOM-RIGHT:
     - tap 1: ENTER / HOLD: LSHIFT
 */
     behaviors {
-        hl: hold-layer {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
+        top_left: top_left {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&kp>, <&to>;
+            bindings = <&kp LEFT>, <&mt LCTRL ESCAPE>, <&bootloader>;
         };
 
-        top_left_default: tap_dance_top_left_default {
+        top_right: top_right {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&kp LEFT>, <&hl W MIRRORED>, <&bootloader>;
-        };
-        top_left_mirrored: tap_dance_top_left_mirrored {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&kp LEFT>, <&hl W DEFAULT_LAYER>, <&bootloader>;
-        };
-
-        top_right_default: top_right_default {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&kp RIGHT>, <&hl X DEFAULT_LAYER>, <&bootloader>;
-        };
-        top_right_mirrored: top_right_mirrored {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&kp RIGHT>, <&hl X MIRRORED>, <&bootloader>;
+            bindings = <&kp RIGHT>, <&kp LALT>, <&bootloader>;
         };
 
         bottom_left: tap_dance_bottom_left {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&kp SPACE>, <&kp Y>, <&bootloader>;
+            bindings = <&mt RALT SPACE>, <&kp BACKSPACE>, <&bootloader>;
         };
         bottom_right: tap_dance_bottom_right {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&kp ENTER>, <&kp Z>, <&bootloader>;
+            bindings = <&mt LSHIFT ENTER>, <&kp Z>, <&bootloader>;
         };
     };
 
@@ -154,21 +142,11 @@ BOTTOM-RIGHT:
 
         default_layer {
             bindings = <
-    &top_left_default   &kp N1  &kp N4  &top_right_default
-                        &kp N2  &kp N5
-                        &kp N3  &kp N6
-    &bottom_left        &kp N7  &kp N8  &bottom_right
+    &top_right          &trans  &trans  &top_left
+                        &trans  &trans
+                        &trans  &trans
+    &bottom_right       &trans  &trans  &bottom_left
             >;
         };
-
-        mirrored_layer {
-            bindings = <
-    &top_right_mirrored &kp N4  &kp N1  &top_left_mirrored
-                        &kp N5  &kp N2
-                        &kp N6  &kp N3
-    &bottom_right       &kp N8  &kp N7  &bottom_left
-            >;
-        };
-
     };
 };
