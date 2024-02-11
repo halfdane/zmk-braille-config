@@ -1,0 +1,8 @@
+file_format: "1"
+id: braille
+name: halfdane's braille board 
+type: shield
+url: none
+requires: [pro_micro]
+features:
+  - keys
