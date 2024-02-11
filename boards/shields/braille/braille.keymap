@@ -3,35 +3,49 @@
 #include <dt-bindings/zmk/outputs.h>
 
 
+/*
+  Top left (TL), top right (TR), bottom left (BL) and bottom right (BR)
+  are special keys with tap dances and all kinds of fancy stuff
+  see below.
+  The numbers represent the braille dots, so '1' means 'braille dot 1'
+  
+  ╭─────────────────╮
+  │  TL  1   4  TR  │
+  │      2   5      │
+  │      3   6      │
+  │  BL  7   8  BR  │
+  ╰─────────────────╯
+*/
+
 / {
 
-//    behaviors {
-//        td0: tap_dance_0 {
-//            compatible = "zmk,behavior-tap-dance";
-//            #binding-cells = <0>;
-//            tapping-term-ms = <200>;
-//            bindings = <&kp LEFT>, <&kp NONE>;
-//        };
-//    };
+/* 
+TOP-LEFT: 
+    - tap 1: left
+    - tap 2: select correct layer / HOLD: 
+    - tap 3: switch to bootloader mode 
+*/
+    behaviors {
+        top_left: tap_dance_0 {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LEFT>, <&trans>, <&bootloader>;
+        };
+    };
+
+/* TOP-RIGHt: 
+ *  - tap 1: right
+ *  - tap 2: select correct layer / HOLD: 
+ */
 
     keymap {
         compatible = "zmk,keymap";
 
 
-/* TOP-LEFT: 
- *  - tap 1: left
- *  - tap 2: select correct layer / HOLD: 
- *  - tap 3: switch to bootloader mode 
- * TOP-RIGHt: 
- *  - tap 1: right
- *  - tap 2: select correct layer / HOLD: 
- *
-*/
-
         default_layer {
             bindings = <
-
-    &kp A           &kp B   &kp C   &kp D
+    &top_left       &kp B   &kp C   &kp D
                     &kp E   &kp F
                     &kp G   &kp H
     &kp I           &kp J   &kp K   &kp L
