@@ -22,6 +22,67 @@
 
 #define TAPPING_TERM 250
 
+#define DOTS_TIMEOUT 100
+
+// position of dots on keyboard
+#define D1 1
+#define D2 4
+#define D3 6
+#define D4 2
+#define D5 5
+#define D6 7
+#define D7 9
+#define D8 10
+
+/ {
+    combos {
+        compatible = "zmk,combos";
+        combo_A { key-positions = <D1>;             bindings = <&kp A>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_B { key-positions = <D1 D2>;          bindings = <&kp B>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_C { key-positions = <D1 D4>;          bindings = <&kp C>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_D { key-positions = <D1 D4 D5>;       bindings = <&kp D>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_E { key-positions = <D1 D5>;          bindings = <&kp E>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_F { key-positions = <D1 D2 D4>;       bindings = <&kp F>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_G { key-positions = <D1 D2 D4 D5>;    bindings = <&kp G>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_H { key-positions = <D1 D2 D5>;       bindings = <&kp H>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_I { key-positions = <D2 D4>;          bindings = <&kp I>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_J { key-positions = <D2 D4 D5>;       bindings = <&kp J>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_K { key-positions = <D1 D3 >;         bindings = <&kp K>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_L { key-positions = <D1 D2 D3 >;      bindings = <&kp L>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_M { key-positions = <D1 D3 D4>;       bindings = <&kp M>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_N { key-positions = <D1 D3 D4 D5>;    bindings = <&kp N>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_O { key-positions = <D1 D3 D5>;       bindings = <&kp O>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_P { key-positions = <D1 D2 D3 D4>;    bindings = <&kp P>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_Q { key-positions = <D1 D2 D3 D4 D5>; bindings = <&kp Q>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_R { key-positions = <D1 D2 D3 D5>;    bindings = <&kp R>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_S { key-positions = <D2 D3 D4>;       bindings = <&kp S>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_T { key-positions = <D2 D3 D4 D5>;    bindings = <&kp T>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_U { key-positions = <D1 D3 D6>;       bindings = <&kp U>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_V { key-positions = <D1 D2 D3 D6>;    bindings = <&kp V>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_W { key-positions = <D2 D4 D5 D6>;    bindings = <&kp W>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_X { key-positions = <D1 D3 D4 D6>;    bindings = <&kp X>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_Y { key-positions = <D1 D3 D4 D5 D6>; bindings = <&kp Y>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_Z { key-positions = <D1 D3 D5 D6>;    bindings = <&kp Z>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_AUML { key-positions = <D3 D4 D5>;    bindings = <&kp RA(Q)>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_OUML { key-positions = <D2 D4 D6>;    bindings = <&kp RA(P)>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_UUML { key-positions = <D1 D2 D5 D6>; bindings = <&kp RA(Y)>; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_SUML { key-positions = <D2 D3 D4 D6>; bindings = <&kp RA(S)>; timeout-ms = <DOTS_TIMEOUT>; };
+
+        combo_COMM { key-positions = <D2>;          bindings = <&kp COMMA >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_SCOL { key-positions = <D2 D3>;       bindings = <&kp SEMI >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_COLO { key-positions = <D2 D5>;       bindings = <&kp COLON >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_QUE1 { key-positions = <D2 D6>;       bindings = <&kp QUESTION >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_EXCL { key-positions = <D2 D3 D5>;    bindings = <&kp EXCLAMATION >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_LEFT { key-positions = <D2 D3 D5 D6>; bindings = <&kp LPAR >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_DOU1 { key-positions = <D2 D3 D6>;    bindings = <&kp DOUBLE_QUOTES >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_DOU2 { key-positions = <D3 D5 D6>;    bindings = <&kp DOUBLE_QUOTES >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_QUE2 { key-positions = <D3 D4 D6>;    bindings = <&kp QUESTION >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_PERI { key-positions = <D3>;          bindings = <&kp DOT >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_MINU { key-positions = <D3 D6>;       bindings = <&kp MINUS >; timeout-ms = <DOTS_TIMEOUT>; };
+        combo_QUOT { key-positions = <D6>;          bindings = <&kp APOSTROPHE >; timeout-ms = <DOTS_TIMEOUT>; };
+    };
+};
+
 / {
 /* 
 TOP-LEFT: 
@@ -86,8 +147,6 @@ BOTTOM-RIGHT:
             bindings = <&kp ENTER>, <&kp Z>, <&bootloader>;
         };
     };
-
-
 
     keymap {
         compatible = "zmk,keymap";
