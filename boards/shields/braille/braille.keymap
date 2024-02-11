@@ -4,16 +4,37 @@
 
 
 / {
+
+//    behaviors {
+//        td0: tap_dance_0 {
+//            compatible = "zmk,behavior-tap-dance";
+//            #binding-cells = <0>;
+//            tapping-term-ms = <200>;
+//            bindings = <&kp LEFT>, <&kp NONE>;
+//        };
+//    };
+
     keymap {
         compatible = "zmk,keymap";
+
+
+/* TOP-LEFT: 
+ *  - tap 1: left
+ *  - tap 2: select correct layer / HOLD: 
+ *  - tap 3: switch to bootloader mode 
+ * TOP-RIGHt: 
+ *  - tap 1: right
+ *  - tap 2: select correct layer / HOLD: 
+ *
+*/
 
         default_layer {
             bindings = <
 
-    &kp D           &kp C   &kp B   &kp A
-                    &kp G   &kp F
-                    &out OUT_BLE   &kp H
-    &kp L           &kp K   &kp J   &kp I
+    &kp A           &kp B   &kp C   &kp D
+                    &kp E   &kp F
+                    &kp G   &kp H
+    &kp I           &kp J   &kp K   &kp L
             >;
         };
     };
