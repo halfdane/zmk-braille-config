@@ -3,6 +3,8 @@
 #include <dt-bindings/zmk/outputs.h>
 
 
+#define KEYBOARD US_INTL
+
 /*
   Top left (TL), top right (TR), bottom left (BL) and bottom right (BR)
   are special keys with tap dances and all kinds of fancy stuff
@@ -18,7 +20,6 @@
 */
 
 #define TAPPING_TERM 250
-
 #define DOTS_TIMEOUT 100
 
 // position of dots on keyboard
@@ -31,63 +32,107 @@
 #define D7 9
 #define D8 10
 
+// the layers are mostly the same - they are just used to differentiate the combos
+#define BASE_LAYER 0
+#define NUM_LAYER 1
+
+// combos that are active on the base layer
+#define BASE_COMBO(NAME, KEYS, BINDINGS)  combo_ ## NAME { key-positions = KEYS; bindings = BINDINGS; timeout-ms = <DOTS_TIMEOUT>; layers = <BASE_LAYER>;};
+
+// combos that are active on the number layer
+#define NUM_COMBO(NAME, KEYS, BINDINGS)  combo_ ## NAME { key-positions = KEYS; bindings = BINDINGS; timeout-ms = <DOTS_TIMEOUT>; layers = <NUM_LAYER>;};
+
+// macros: multiple keypresses in one go
+#define MAC(NAME, BINDINGS)         NAME: NAME {compatible = "zmk,behavior-macro";#binding-cells = <0>; bindings = BINDINGS;};
+
+
+// Umlauts: depending on your keyboard layout (german or us-intl), different strategies are used to create umlauts
+#ifdef US_INTL
+#else
+#endif
+
+
 / {
+    // these are used further down
+    macros {
+        MAC(AU, <&macro_tap &kp A &kp U>)
+        MAC(EU, <&macro_tap &kp E &kp U>)
+        MAC(EI, <&macro_tap &kp E &kp I>)
+        MAC(CH, <&macro_tap &kp C &kp H>)
+        MAC(SCH, <&macro_tap &kp S &kp C &kp H>)
+        MAC(ST, <&macro_tap &kp S &kp T>)
+        MAC(AUML_U, <&macro_tap &kp RA(Q) &kp U>)
+        MAC(IE, <&macro_tap &kp I &kp E>)
+    };
+
     combos {
         compatible = "zmk,combos";
-        combo_A { key-positions = <D1>;             bindings = <&kp A>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_B { key-positions = <D1 D2>;          bindings = <&kp B>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_C { key-positions = <D1 D4>;          bindings = <&kp C>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_D { key-positions = <D1 D4 D5>;       bindings = <&kp D>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_E { key-positions = <D1 D5>;          bindings = <&kp E>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_F { key-positions = <D1 D2 D4>;       bindings = <&kp F>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_G { key-positions = <D1 D2 D4 D5>;    bindings = <&kp G>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_H { key-positions = <D1 D2 D5>;       bindings = <&kp H>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_I { key-positions = <D2 D4>;          bindings = <&kp I>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_J { key-positions = <D2 D4 D5>;       bindings = <&kp J>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_K { key-positions = <D1 D3 >;         bindings = <&kp K>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_L { key-positions = <D1 D2 D3 >;      bindings = <&kp L>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_M { key-positions = <D1 D3 D4>;       bindings = <&kp M>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_N { key-positions = <D1 D3 D4 D5>;    bindings = <&kp N>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_O { key-positions = <D1 D3 D5>;       bindings = <&kp O>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_P { key-positions = <D1 D2 D3 D4>;    bindings = <&kp P>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_Q { key-positions = <D1 D2 D3 D4 D5>; bindings = <&kp Q>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_R { key-positions = <D1 D2 D3 D5>;    bindings = <&kp R>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_S { key-positions = <D2 D3 D4>;       bindings = <&kp S>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_T { key-positions = <D2 D3 D4 D5>;    bindings = <&kp T>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_U { key-positions = <D1 D3 D6>;       bindings = <&kp U>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_V { key-positions = <D1 D2 D3 D6>;    bindings = <&kp V>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_W { key-positions = <D2 D4 D5 D6>;    bindings = <&kp W>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_X { key-positions = <D1 D3 D4 D6>;    bindings = <&kp X>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_Y { key-positions = <D1 D3 D4 D5 D6>; bindings = <&kp Y>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_Z { key-positions = <D1 D3 D5 D6>;    bindings = <&kp Z>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_AUML { key-positions = <D3 D4 D5>;    bindings = <&kp RA(Q)>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_OUML { key-positions = <D2 D4 D6>;    bindings = <&kp RA(P)>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_UUML { key-positions = <D1 D2 D5 D6>; bindings = <&kp RA(Y)>; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_SUML { key-positions = <D2 D3 D4 D6>; bindings = <&kp RA(S)>; timeout-ms = <DOTS_TIMEOUT>; };
+        BASE_COMBO(A, <D1>,             <&kp A>)
+        BASE_COMBO(B, <D1 D2>,          <&kp B>)
+        BASE_COMBO(C, <D1 D4>,          <&kp C>)
+        BASE_COMBO(D, <D1 D4 D5>,       <&kp D>)
+        BASE_COMBO(E, <D1 D5>,          <&kp E>)
+        BASE_COMBO(F, <D1 D2 D4>,       <&kp F>)
+        BASE_COMBO(G, <D1 D2 D4 D5>,    <&kp G>)
+        BASE_COMBO(H, <D1 D2 D5>,       <&kp H>)
+        BASE_COMBO(I, <D2 D4>,          <&kp I>)
+        BASE_COMBO(J, <D2 D4 D5>,       <&kp J>)
+        BASE_COMBO(K, <D1 D3 >,         <&kp K>)
+        BASE_COMBO(L, <D1 D2 D3 >,      <&kp L>)
+        BASE_COMBO(M, <D1 D3 D4>,       <&kp M>)
+        BASE_COMBO(N, <D1 D3 D4 D5>,    <&kp N>)
+        BASE_COMBO(O, <D1 D3 D5>,       <&kp O>)
+        BASE_COMBO(P, <D1 D2 D3 D4>,    <&kp P>)
+        BASE_COMBO(Q, <D1 D2 D3 D4 D5>, <&kp Q>)
+        BASE_COMBO(R, <D1 D2 D3 D5>,    <&kp R>)
+        BASE_COMBO(S, <D2 D3 D4>,       <&kp S>)
+        BASE_COMBO(T, <D2 D3 D4 D5>,    <&kp T>)
+        BASE_COMBO(U, <D1 D3 D6>,       <&kp U>)
+        BASE_COMBO(V, <D1 D2 D3 D6>,    <&kp V>)
+        BASE_COMBO(W, <D2 D4 D5 D6>,    <&kp W>)
+        BASE_COMBO(X, <D1 D3 D4 D6>,    <&kp X>)
+        BASE_COMBO(Y, <D1 D3 D4 D5 D6>, <&kp Y>)
+        BASE_COMBO(Z, <D1 D3 D5 D6>,    <&kp Z>)
+        BASE_COMBO(AUML, <D3 D4 D5>,    <&kp RA(Q)>)
+        BASE_COMBO(OUML, <D2 D4 D6>,    <&kp RA(P)>)
+        BASE_COMBO(UUML, <D1 D2 D5 D6>, <&kp RA(Y)>)
+        BASE_COMBO(SUML, <D2 D3 D4 D6>, <&kp RA(S)>)
 
-        combo_COMM { key-positions = <D2>;          bindings = <&kp COMMA >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_SCOL { key-positions = <D2 D3>;       bindings = <&kp SEMI >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_COLO { key-positions = <D2 D5>;       bindings = <&kp COLON >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_QUE1 { key-positions = <D2 D6>;       bindings = <&kp QUESTION >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_EXCL { key-positions = <D2 D3 D5>;    bindings = <&kp EXCLAMATION >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_LEFT { key-positions = <D2 D3 D5 D6>; bindings = <&kp LPAR >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_DOU1 { key-positions = <D2 D3 D6>;    bindings = <&kp DOUBLE_QUOTES >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_DOU2 { key-positions = <D3 D5 D6>;    bindings = <&kp DOUBLE_QUOTES >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_QUE2 { key-positions = <D3 D4 D6>;    bindings = <&kp QUESTION >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_PERI { key-positions = <D3>;          bindings = <&kp DOT >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_MINU { key-positions = <D3 D6>;       bindings = <&kp MINUS >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_QUOT { key-positions = <D6>;          bindings = <&kp APOSTROPHE >; timeout-ms = <DOTS_TIMEOUT>; };
+        // multiple keys with one braille sign - uses the macros from above
+        BASE_COMBO(AU, <D1 D6>,         <&AU>)
+        BASE_COMBO(EU, <D1 D2 D6>,      <&EU>)
+        BASE_COMBO(EI, <D1 D4 D6>,      <&EI>)
+        BASE_COMBO(CH, <D1 D4 D5 D6>,   <&CH>)
+        BASE_COMBO(SCH,<D1 D5 D6>,      <&SCH>)
+        BASE_COMBO(ST, <D2 D3 D4 D5 D6>,<&ST>)
+        BASE_COMBO(AUML_U, <D3 D4>,         <&AUML_U>)
+        BASE_COMBO(IE, <D3 D4 D6>,      <&IE>)
 
-        combo_1 { key-positions = <D1 D6>;          bindings = <&kp N1 >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_2 { key-positions = <D1 D2 D6>;       bindings = <&kp N2 >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_3 { key-positions = <D1 D4 D6>;       bindings = <&kp N3 >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_4 { key-positions = <D1 D4 D5 D6>;    bindings = <&kp N4 >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_5 { key-positions = <D1 D5 D6>;       bindings = <&kp N5 >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_6 { key-positions = <D1 D2 D4 D6>;    bindings = <&kp N6 >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_7 { key-positions = <D1 D2 D4 D5 D6>; bindings = <&kp N7 >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_8 { key-positions = <D1 D2 D5 D6>;    bindings = <&kp N8 >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_9 { key-positions = <D2 D4 D6>;       bindings = <&kp N9 >; timeout-ms = <DOTS_TIMEOUT>; };
-        combo_0 { key-positions = <D3 D4 D6>;       bindings = <&kp N0 >; timeout-ms = <DOTS_TIMEOUT>; };
+        BASE_COMBO(COMM, <D2>,          <&kp COMMA >)
+        BASE_COMBO(SCOL, <D2 D3>,       <&kp SEMI >)
+        BASE_COMBO(COLO, <D2 D5>,       <&kp COLON >)
+        BASE_COMBO(QUE1, <D2 D6>,       <&kp QUESTION >)
+        BASE_COMBO(EXCL, <D2 D3 D5>,    <&kp EXCLAMATION >)
+        BASE_COMBO(LEFT, <D2 D3 D5 D6>, <&kp LPAR >)
+        BASE_COMBO(DOU1, <D2 D3 D6>,    <&kp DOUBLE_QUOTES >)
+        BASE_COMBO(DOU2, <D3 D5 D6>,    <&kp DOUBLE_QUOTES >)
+        BASE_COMBO(QUE2, <D3 D4 D6>,    <&kp QUESTION >)
+        BASE_COMBO(PERI, <D3>,          <&kp DOT >)
+        BASE_COMBO(MINU, <D3 D6>,       <&kp MINUS >)
+        BASE_COMBO(QUOT, <D6>,          <&kp APOSTROPHE >)
+
+        BASE_COMBO(TO_NUM, <D3 D4 D5 D6>,   <&to NUM_LAYER>)
+
+        NUM_COMBO(1, <D1>,              <&kp N1>)
+        NUM_COMBO(2, <D1 D2>,           <&kp N2>)
+        NUM_COMBO(3, <D1 D4>,           <&kp N3>)
+        NUM_COMBO(4, <D1 D4 D5>,        <&kp N4>)
+        NUM_COMBO(5, <D1 D5>,           <&kp N5>)
+        NUM_COMBO(6, <D1 D2 D4>,        <&kp N6>)
+        NUM_COMBO(7, <D1 D2 D4 D5>,     <&kp N7>)
+        NUM_COMBO(8, <D1 D2 D5>,        <&kp N8>)
+        NUM_COMBO(9, <D2 D4>,           <&kp N9>)
+        NUM_COMBO(0, <D2 D4 D5>,        <&kp N0>)
     };
 };
 
@@ -95,17 +140,20 @@
 /* 
 TOP-LEFT: 
     - tap 1: left
-    - tap 2: LControl
+    - tap 2: escape / LControl
     - tap 3: switch to bootloader mode 
 TOP-RIGHT: 
     - tap 1: right
     - tap 2: LAlt
     - tap 3: switch to bootloader mode 
 BOTTOM-LEFT:
-    - tap 1: SPACE / HOLD: RALT
+    - tap 1: SPACE / RALT
     - tap 2: BSPACE
+    - tap 3: switch to bootloader mode 
 BOTTOM-RIGHT:
     - tap 1: ENTER / HOLD: LSHIFT
+    - tap 2: to base_layer (the one with the letters)
+    - tap 3: switch to bootloader mode 
 */
     behaviors {
         top_left: top_left {
@@ -132,7 +180,7 @@ BOTTOM-RIGHT:
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&mt LSHIFT ENTER>, <&kp Z>, <&bootloader>;
+            bindings = <&mt LSHIFT ENTER>, <&to BASE_LAYER>, <&bootloader>;
         };
     };
 
@@ -140,7 +188,7 @@ BOTTOM-RIGHT:
         compatible = "zmk,keymap";
 
 
-        default_layer {
+        base_layer {
             bindings = <
     &top_right          &trans  &trans  &top_left
                         &trans  &trans
@@ -148,5 +196,15 @@ BOTTOM-RIGHT:
     &bottom_right       &trans  &trans  &bottom_left
             >;
         };
+
+        num_layer {
+            bindings = <
+    &top_right          &trans  &trans  &top_left
+                        &trans  &trans
+                        &trans  &trans
+    &bottom_right       &trans  &trans  &bottom_left
+            >;
+        };
+
     };
 };
