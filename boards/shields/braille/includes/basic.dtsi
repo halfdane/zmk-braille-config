@@ -1,0 +1,19 @@
+#define A_ON_LEFT 1
+#define A_ON_RIGHT 2
+
+// prefer the "a" dot on the left -> reverse the keyboard
+#define PREFER_DOTS A_ON_LEFT
+
+
+// combos that are active on the base layer
+#define BASE_COMBO(NAME, KEYS, BINDINGS)  combo_ ## NAME { key-positions = KEYS; bindings = BINDINGS; timeout-ms = <DOTS_TIMEOUT>; layers = <BASE_LAYER>;};
+
+// combos that are active on the number layer
+#define NUM_COMBO(NAME, KEYS, BINDINGS)  combo_ ## NAME { key-positions = KEYS; bindings = BINDINGS; timeout-ms = <DOTS_TIMEOUT>; layers = <NUM_LAYER>;};
+
+// macros: multiple keypresses in one go
+#define MACRO(NAME, BINDINGS)         NAME: NAME {compatible = "zmk,behavior-macro";#binding-cells = <0>; bindings = BINDINGS;};
+
+// the layers are really the same - they are just used to differentiate the combos
+#define BASE_LAYER 0
+#define NUM_LAYER 1
