@@ -1,3 +1,5 @@
+#include "../../../zmk-nodefree-config/helper.h"
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
@@ -21,7 +23,24 @@
   │      3   6      │
   │  BL  7   8  BR  │
   ╰─────────────────╯
+
+        base_layer {
+            bindings = <
+            >;
+        };
+
+
 */
+ZMK_LAYER(base_layer,    
+&top_right     &trans  &trans  &top_left
+               &trans  &trans
+               &trans  &trans
+&bottom_right  &trans  &trans  &bottom_left)
+ZMK_LAYER(num_layer,    
+&top_right     &trans  &trans  &top_left
+               &trans  &trans
+               &trans  &trans
+&bottom_right  &trans  &trans  &bottom_left)
 
 / {
 /* 
@@ -69,27 +88,4 @@ BOTTOM-RIGHT:
         };
     };
 
-    keymap {
-        compatible = "zmk,keymap";
-
-
-        base_layer {
-            bindings = <
-    &top_right          &trans  &trans  &top_left
-                        &trans  &trans
-                        &trans  &trans
-    &bottom_right       &trans  &trans  &bottom_left
-            >;
-        };
-
-        num_layer {
-            bindings = <
-    &top_right          &trans  &trans  &top_left
-                        &trans  &trans
-                        &trans  &trans
-    &bottom_right       &trans  &trans  &bottom_left
-            >;
-        };
-
-    };
 };
