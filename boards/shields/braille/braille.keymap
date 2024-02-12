@@ -23,26 +23,14 @@
   │      3   6      │
   │  BL  7   8  BR  │
   ╰─────────────────╯
-
-        base_layer {
-            bindings = <
-            >;
-        };
-
-
 */
 ZMK_LAYER(base_layer,    
 &top_right     &trans  &trans  &top_left
                &trans  &trans
                &trans  &trans
 &bottom_right  &trans  &trans  &bottom_left)
-ZMK_LAYER(num_layer,    
-&top_right     &trans  &trans  &top_left
-               &trans  &trans
-               &trans  &trans
-&bottom_right  &trans  &trans  &bottom_left)
+ZMK_LAYER(num_layer,    &top_right)
 
-/ {
 /* 
 TOP-LEFT: 
     - tap 1: left
@@ -58,34 +46,12 @@ BOTTOM-LEFT:
 BOTTOM-RIGHT:
     - tap 1: ENTER / LSHIFT
     - tap 2: to base_layer (the one with the letters)
-*/
-    behaviors {
-        top_left: top_left {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&kp LEFT>, <&mt LCTRL ESCAPE>, <&bootloader>;
-        };
-
-        top_right: top_right {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&kp RIGHT>, <&kp LALT>, <&bootloader>;
-        };
-
-        bottom_left: tap_dance_bottom_left {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&mt RALT SPACE>, <&kp BACKSPACE>;
-        };
-        bottom_right: tap_dance_bottom_right {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <TAPPING_TERM>;
-            bindings = <&mt LSHIFT ENTER>, <&to BASE_LAYER>;
-        };
-    };
-
-};
+*/ 
+ZMK_BEHAVIOR(top_left, tap_dance, tapping-term-ms = <TAPPING_TERM>;
+    bindings = <&kp LEFT>, <&mt LCTRL ESCAPE>, <&bootloader>; )
+ZMK_BEHAVIOR(top_right, tap_dance, tapping-term-ms = <TAPPING_TERM>;
+    bindings = <&kp RIGHT>, <&kp LALT>, <&bootloader>; )
+ZMK_BEHAVIOR(bottom_left, tap_dance, tapping-term-ms = <TAPPING_TERM>;
+    bindings = <&mt RALT SPACE>, <&kp BACKSPACE>; )
+ZMK_BEHAVIOR(bottom_right, tap_dance, tapping-term-ms = <TAPPING_TERM>;
+    bindings = <&mt LSHIFT ENTER>, <&to BASE_LAYER>; )
