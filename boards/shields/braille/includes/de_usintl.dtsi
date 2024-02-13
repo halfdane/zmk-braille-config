@@ -6,14 +6,6 @@
 // Contains the 26 letters of the alphabet, the numbers, some contractions
 // and punctuation as well as some symbols
 
-// helper layers
-ZMK_LAYER(dot4_layer, &trans)
-#define DOT4_LAYER 2
-ZMK_LAYER(dot5_layer, &trans)
-#define DOT5_LAYER 3
-ZMK_LAYER(dot6_layer, &trans)
-#define DOT6_LAYER 4
-
 // `dot_layer DOT6_LAYER P` will 
 // - type the key 'P" when tapped or
 // - activate DOT6_LAYER as `sticky layer` when held

@@ -1,3 +1,20 @@
+// **********************
+//    BRAILLE KEYBOARD
+// **********************
+//  Top left (TL), top right (TR), bottom left (BL) and bottom right (BR)
+//  are special keys with tap dances and all kinds of fancy stuff (see SPECIAL KEYS).
+//  The numbers represent the braille dots, so '1' means 'braille dot 1'
+//  ╭─────────────────╮
+//  │  TL  4   1  TR  │
+//  │      5   2      │
+//  │      6   3      │
+//  │  BL  8   7  BR  │
+//  ╰─────────────────╯
+// Swapping the columns: see DOT CONFIGURATION below
+
+// time to wait before consecutive taps activate tap dance 
+#define TAPPING_TERM 250
+// time window for combos to activate
 #define COMBO_TERM 100
 #include "../../../zmk-nodefree-config/helper.h"
 
@@ -6,63 +23,82 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/bt.h>
 
-#define TAPPING_TERM 250
-#define DOTS_TIMEOUT 100
 
-/*
-  Top left (TL), top right (TR), bottom left (BL) and bottom right (BR)
-  are special keys with tap dances and all kinds of fancy stuff
-  see below.
-  The numbers represent the braille dots, so '1' means 'braille dot 1'
+#define DOT1_ON_LEFT 1
+#define DOT1_ON_RIGHT 2
 
-  ╭─────────────────╮
-  │  TL  1   4  TR  │
-  │      2   5      │
-  │      3   6      │
-  │  BL  7   8  BR  │
-  ╰─────────────────╯
-*/
+// **********************
+// DOT CONFIGURATION
+//  change the comments to flip the columns
+// **********************
+#define PREFER_DOTS DOT1_ON_RIGHT
+//#define PREFER_DOTS DOT1_ON_LEFT
+
+// if you want more detailled control, you can adjust the following file
+#include "includes/dots.dtsi"
+
+
+// ************
+//    LAYERS
+// ************
 ZMK_LAYER(base_layer,    
 &top_right     &trans  &trans  &top_left
                &trans  &trans
                &trans  &trans
 &bottom_right  &trans  &trans  &bottom_left)
+#define BASE_LAYER 0
 
-#include "includes/basic.dtsi"
-#include "includes/dots.dtsi"
+// the layers are really the same - they are just used to differentiate the combos
+ZMK_LAYER(BR_NUM_LAYER, &trans)
+#define NUM_LAYER 1
+// helper layers that activate when the corresponding dot is pressed
+ZMK_LAYER(BR_DOT4_LAYER, &trans)
+#define DOT4_LAYER 2
+ZMK_LAYER(BR_DOT5_LAYER, &trans)
+#define DOT5_LAYER 3
+ZMK_LAYER(BR_DOT6_LAYER, &trans)
+#define DOT6_LAYER 4
 
+
+// ***********************
+//    LANGUAGE / LAYOUT
+// ***********************
 // include the language
 #include "includes/de_de_android.dtsi"
 // #include "includes/de_de.dtsi"
 // #include "includes/de_usint.dtsi"
 
-/* 
-TOP-LEFT: 
-    - tap 1: left
-    - tap 2: escape / LControl
-TOP-RIGHT: 
-    - tap 1: right
-    - tap 2: LAlt
-BOTTOM-LEFT:
-    - tap 1: SPACE / RALT
-    - tap 2: BSPACE
-BOTTOM-RIGHT:
-    - tap 1: ENTER / LSHIFT
-    - tap 2: to base_layer (the one with the letters)
 
-TOP-LEFT and TOP-RIGHT together switch to bootloader mode 
-BOTTOM-LEFT and BOTTOM-RIGHT together reset all bluetooth pairings
-*/ 
+// ******************
+//    SPECIAL KEYS
+// ******************
+// TOP-LEFT: 
+//     - tap 1: left
+//     - tap 2: escape / LControl
 ZMK_BEHAVIOR(top_left, tap_dance, tapping-term-ms = <TAPPING_TERM>;
     bindings = <&kp LEFT>, <&mt LCTRL ESCAPE>; )
+
+// TOP-RIGHT: 
+//     - tap 1: right
+//     - tap 2: LAlt
 ZMK_BEHAVIOR(top_right, tap_dance, tapping-term-ms = <TAPPING_TERM>;
     bindings = <&kp RIGHT>, <&kp LALT>; )
+
+// BOTTOM-LEFT:
+//     - tap 1: SPACE / RALT
+//     - tap 2: BSPACE
 ZMK_BEHAVIOR(bottom_left, tap_dance, tapping-term-ms = <TAPPING_TERM>;
     bindings = <&mt RALT SPACE>, <&kp BACKSPACE>; )
+
+// BOTTOM-RIGHT:
+//     - tap 1: ENTER / LSHIFT
+//     - tap 2: to base_layer (the one with the letters)
 ZMK_BEHAVIOR(bottom_right, tap_dance, tapping-term-ms = <TAPPING_TERM>;
     bindings = <&mt LSHIFT ENTER>, <&to BASE_LAYER>; )
 
 
+// TOP-LEFT and TOP-RIGHT together switch to bootloader mode 
+// BOTTOM-LEFT and BOTTOM-RIGHT together reset all bluetooth pairings
 ZMK_COMBO(TL_TR_BOOTLOADER, &bootloader,  0 3, ALL)
 ZMK_COMBO(BL_BR_BT_CLEAR_ALL, &bt BT_CLR_ALL,  8 11, ALL)
 
