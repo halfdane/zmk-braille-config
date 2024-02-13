@@ -1,13 +1,45 @@
+// ************************************
+// *    Keymap for German Braille     *
+// ************************************
+// Keymap for the german "Vollschrift" Braille
+// Which corresponds to the "Grade 2" Braille in English
+// Contains the 26 letters of the alphabet, the numbers, some contractions
+// and punctuation as well as some symbols
+
+// helper layers
+ZMK_LAYER(dot4_layer, &trans)
+#define DOT4_LAYER 2
+ZMK_LAYER(dot5_layer, &trans)
+#define DOT5_LAYER 3
+ZMK_LAYER(dot6_layer, &trans)
+#define DOT6_LAYER 4
+
+// `dot_layer DOT6_LAYER P` will 
+// - type the key 'P" when tapped or
+// - activate DOT6_LAYER as `sticky layer` when held
+// if you want layer behavior on dots without a key, use `&sl` instead
+ZMK_BEHAVIOR(dot_layer, hold_tap,
+    flavor = "balanced";
+    tapping-term-ms = <280>;
+    quick-tap-ms = <125>;
+    bindings = <&sl>, <&kp>;
+)
+&sl {
+    release-after-ms = <5000>;
+};
+
 // Using the us_international keymap as a base
 ZMK_BEHAVIOR(DE_AUML,    macro,  bindings = <&macro_tap &kp RA(Q)>;)
 ZMK_BEHAVIOR(DE_OUML,    macro,  bindings = <&macro_tap &kp RA(P)>;)
 ZMK_BEHAVIOR(DE_UUML,    macro,  bindings = <&macro_tap &kp RA(Y)>;)
 ZMK_BEHAVIOR(DE_SUML,    macro,  bindings = <&macro_tap &kp RA(S)>;)
 
-
+// type current layout when pressing D8
 ZMK_BEHAVIOR(LAYOUT, macro, bindings = <&kp D &kp E &kp I &kp N &kp T &kp L>;)
-ZMK_COMBO(BR_LAYOUT_KEY,  &LAYOUT, D4,           BASE_LAYER)
+ZMK_COMBO(BR_LAYOUT_KEY,  &LAYOUT, D8,         BASE_LAYER)
 
+
+// alphabet
 ZMK_COMBO(BR_A,  &kp A,        D1,             BASE_LAYER)
 ZMK_COMBO(BR_B,  &kp B,        D1 D2,          BASE_LAYER)
 ZMK_COMBO(BR_C,  &kp C,        D1 D4,          BASE_LAYER)
@@ -39,6 +71,7 @@ ZMK_COMBO(BR_OUML, &DE_OUML,   D2 D4 D6,       BASE_LAYER)
 ZMK_COMBO(BR_UUML, &DE_UUML,   D1 D2 D5 D6,    BASE_LAYER)
 ZMK_COMBO(BR_SUML, &DE_SUML,   D2 D3 D4 D6,    BASE_LAYER)
 
+// simple contractions
 ZMK_BEHAVIOR(AU,    macro,  bindings = <&macro_tap &kp A &kp U>;)
 ZMK_COMBO(BR_AU, &AU,  D1 D6,             BASE_LAYER)
 
@@ -63,8 +96,24 @@ ZMK_COMBO(BR_SCH, &SCH, D1 D5 D6,         BASE_LAYER)
 ZMK_BEHAVIOR(AUML_U, macro, bindings = <&macro_tap &DE_AUML &kp U>;)
 ZMK_COMBO(BR_AUML_U, &AUML_U,  D3 D4,     BASE_LAYER)
 
+// Numbers and number layer
+ZMK_COMBO(BR_TO_NUM, &to 1, D3 D4 D5 D6,  BASE_LAYER)
+ZMK_COMBO(BR_HASH,    &kp MINUS,      D3 D4 D5 D6,         BASE_LAYER)
+ZMK_COMBO(BR_1, &kp N1,        D1,             NUM_LAYER)
+ZMK_COMBO(BR_2, &kp N2,        D1 D2,          NUM_LAYER)
+ZMK_COMBO(BR_3, &kp N3,        D1 D4,          NUM_LAYER)
+ZMK_COMBO(BR_4, &kp N4,        D1 D4 D5,       NUM_LAYER)
+ZMK_COMBO(BR_5, &kp N5,        D1 D5,          NUM_LAYER)
+ZMK_COMBO(BR_6, &kp N6,        D1 D2 D4,       NUM_LAYER)
+ZMK_COMBO(BR_7, &kp N7,        D1 D2 D4 D5,    NUM_LAYER)
+ZMK_COMBO(BR_8, &kp N8,        D1 D2 D5,       NUM_LAYER)
+ZMK_COMBO(BR_9, &kp N9,        D2 D4,          NUM_LAYER)
+ZMK_COMBO(BR_0, &kp N0,        D2 D4 D5,       NUM_LAYER)
 
-ZMK_COMBO(BR_COMMA,         &kp COMMA,          D2,         BASE_LAYER)
+
+// "simple" symbols (no layer needed)
+
+// ZMK_COMBO(BR_COMMA,         &kp COMMA,          D2,         BASE_LAYER)
 ZMK_COMBO(BR_SEMI,          &kp SEMI,           D2 D3,      BASE_LAYER)
 ZMK_COMBO(BR_COLON,         &kp COLON,          D2 D5,      BASE_LAYER)
 ZMK_COMBO(BR_QUESTION,      &kp QUESTION,       D2 D6,      BASE_LAYER)
@@ -76,16 +125,7 @@ ZMK_COMBO(BR_DOUBLE_QUOTE1, &kp DOUBLE_QUOTES,  D3 D5 D6,   BASE_LAYER)
 ZMK_COMBO(BR_QUESTION,      &kp QUESTION,       D3 D4 D6,   BASE_LAYER)
 ZMK_COMBO(BR_DOT,           &kp DOT,            D3,         BASE_LAYER)
 ZMK_COMBO(BR_MINUS,         &kp MINUS,          D3 D6,      BASE_LAYER)
-ZMK_COMBO(BR_APOSTROPHE,    &kp APOSTROPHE,         D6,         BASE_LAYER)
+ZMK_COMBO(BR_APOSTROPHE,    &kp APOSTROPHE,     D6,         BASE_LAYER)
 
-ZMK_COMBO(BR_TO_NUM, &to NUM_LAYER, D3 D4 D5 D6,  BASE_LAYER)
-ZMK_COMBO(BR_1, &kp N1,        D1,             NUM_LAYER)
-ZMK_COMBO(BR_2, &kp N2,        D1 D2,          NUM_LAYER)
-ZMK_COMBO(BR_3, &kp N3,        D1 D4,          NUM_LAYER)
-ZMK_COMBO(BR_4, &kp N4,        D1 D4 D5,       NUM_LAYER)
-ZMK_COMBO(BR_5, &kp N5,        D1 D5,          NUM_LAYER)
-ZMK_COMBO(BR_6, &kp N6,        D1 D2 D4,       NUM_LAYER)
-ZMK_COMBO(BR_7, &kp N7,        D1 D2 D4 D5,    NUM_LAYER)
-ZMK_COMBO(BR_8, &kp N8,        D1 D2 D5,       NUM_LAYER)
-ZMK_COMBO(BR_9, &kp N9,        D2 D4,          NUM_LAYER)
-ZMK_COMBO(BR_0, &kp N0,        D2 D4 D5,       NUM_LAYER)
+ZMK_COMBO(BR_DOT4, &sl DOT4_LAYER,              D4,      BASE_LAYER)
+ZMK_COMBO(BR_LOL1, &kp RA(N5),                  D1 D5,   DOT4_LAYER)

@@ -2,7 +2,7 @@
 #define A_ON_RIGHT 2
 
 // prefer the "a" dot on the left -> reverse the keyboard
-#define PREFER_DOTS A_ON_LEFT
+#define PREFER_DOTS A_ON_RIGHT
 
 
 // combos that are active on the base layer
@@ -16,4 +16,5 @@
 
 // the layers are really the same - they are just used to differentiate the combos
 #define BASE_LAYER 0
+ZMK_LAYER(num_layer, &trans)
 #define NUM_LAYER 1

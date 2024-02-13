@@ -1,15 +1,13 @@
+#define COMBO_TERM 100
 #include "../../../zmk-nodefree-config/helper.h"
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/bt.h>
 
 #define TAPPING_TERM 250
 #define DOTS_TIMEOUT 100
-
-#include "includes/basic.dtsi"
-#include "includes/dots.dtsi"
-#include "includes/de_usintl.dtsi"
 
 /*
   Top left (TL), top right (TR), bottom left (BL) and bottom right (BR)
@@ -29,29 +27,42 @@ ZMK_LAYER(base_layer,
                &trans  &trans
                &trans  &trans
 &bottom_right  &trans  &trans  &bottom_left)
-ZMK_LAYER(num_layer,    &top_right)
+
+#include "includes/basic.dtsi"
+#include "includes/dots.dtsi"
+
+// include the language
+#include "includes/de_de_android.dtsi"
+// #include "includes/de_de.dtsi"
+// #include "includes/de_usint.dtsi"
 
 /* 
 TOP-LEFT: 
     - tap 1: left
     - tap 2: escape / LControl
-    - tap 3: switch to bootloader mode 
 TOP-RIGHT: 
     - tap 1: right
     - tap 2: LAlt
-    - tap 3: switch to bootloader mode 
 BOTTOM-LEFT:
     - tap 1: SPACE / RALT
     - tap 2: BSPACE
 BOTTOM-RIGHT:
     - tap 1: ENTER / LSHIFT
     - tap 2: to base_layer (the one with the letters)
+
+TOP-LEFT and TOP-RIGHT together switch to bootloader mode 
+BOTTOM-LEFT and BOTTOM-RIGHT together reset all bluetooth pairings
 */ 
 ZMK_BEHAVIOR(top_left, tap_dance, tapping-term-ms = <TAPPING_TERM>;
-    bindings = <&kp LEFT>, <&mt LCTRL ESCAPE>, <&bootloader>; )
+    bindings = <&kp LEFT>, <&mt LCTRL ESCAPE>; )
 ZMK_BEHAVIOR(top_right, tap_dance, tapping-term-ms = <TAPPING_TERM>;
-    bindings = <&kp RIGHT>, <&kp LALT>, <&bootloader>; )
+    bindings = <&kp RIGHT>, <&kp LALT>; )
 ZMK_BEHAVIOR(bottom_left, tap_dance, tapping-term-ms = <TAPPING_TERM>;
     bindings = <&mt RALT SPACE>, <&kp BACKSPACE>; )
 ZMK_BEHAVIOR(bottom_right, tap_dance, tapping-term-ms = <TAPPING_TERM>;
     bindings = <&mt LSHIFT ENTER>, <&to BASE_LAYER>; )
+
+
+ZMK_COMBO(TL_TR_BOOTLOADER, &bootloader,  0 3, ALL)
+ZMK_COMBO(BL_BR_BT_CLEAR_ALL, &bt BT_CLR_ALL,  8 11, ALL)
+

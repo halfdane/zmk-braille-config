@@ -2,10 +2,10 @@
 ZMK_BEHAVIOR(DE_AUML,    macro,  bindings = <&macro_tap &kp LA(U) &kp A>;)
 ZMK_BEHAVIOR(DE_OUML,    macro,  bindings = <&macro_tap &kp LA(U) &kp O>;)
 ZMK_BEHAVIOR(DE_UUML,    macro,  bindings = <&macro_tap &kp LA(U) &kp U>;)
-ZMK_BEHAVIOR(DE_SUML,    macro,  bindings = <&macro_tap &kp LA(U) &kp S>;)
+ZMK_BEHAVIOR(DE_SUML,    macro,  bindings = <&macro_tap &kp LA(S)>;)
 
-ZMK_BEHAVIOR(LAYOUT, macro, bindings = <&kp D &kp E &kp D &kp E>;)
-ZMK_COMBO(BR_LAYOUT_KEY,  &LAYOUT, D4,           BASE_LAYER)
+ZMK_BEHAVIOR(LAYOUT, macro, bindings = <&kp D &kp E &kp D &kp E &kp A &kp N &kp D &kp R &kp O &kp I &kp D>;)
+ZMK_COMBO(BR_LAYOUT_KEY,  &LAYOUT, D8,         BASE_LAYER)
 
 ZMK_COMBO(BR_A,  &kp A,        D1,             BASE_LAYER)
 ZMK_COMBO(BR_B,  &kp B,        D1 D2,          BASE_LAYER)
