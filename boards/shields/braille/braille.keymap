@@ -71,9 +71,9 @@ ZMK_LAYER(BR_ADDITIONAL_LAYER, &trans)
 //    LANGUAGE / LAYOUT
 // ***********************
 // include the language
-#include "includes/de_de_android.dtsi"
+// #include "includes/de_de_android.dtsi"
 // #include "includes/de_de.dtsi"
-// #include "includes/de_usint.dtsi"
+#include "includes/de_usintl.dtsi"
 
 
 // ******************       

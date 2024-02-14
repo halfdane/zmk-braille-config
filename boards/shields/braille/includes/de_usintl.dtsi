@@ -93,8 +93,7 @@ ZMK_BEHAVIOR(AUML_U, macro, bindings = <&macro_tap &DE_AUML &kp U>;)
 ZMK_COMBO(BR_AUML_U, &AUML_U,  D3 D4,     BASE_LAYER)
 
 // Numbers and number layer
-ZMK_COMBO(BR_TO_NUM, &to 1, D3 D4 D5 D6,  BASE_LAYER)
-ZMK_COMBO(BR_HASH,    &kp MINUS,      D3 D4 D5 D6,         BASE_LAYER)
+ZMK_COMBO(BR_TO_NUM, &to NUM_LAYER,    D3 D4 D5 D6,  BASE_LAYER)
 ZMK_COMBO(BR_1, &kp N1,        D1,             NUM_LAYER)
 ZMK_COMBO(BR_2, &kp N2,        D1 D2,          NUM_LAYER)
 ZMK_COMBO(BR_3, &kp N3,        D1 D4,          NUM_LAYER)
@@ -104,8 +103,8 @@ ZMK_COMBO(BR_6, &kp N6,        D1 D2 D4,       NUM_LAYER)
 ZMK_COMBO(BR_7, &kp N7,        D1 D2 D4 D5,    NUM_LAYER)
 ZMK_COMBO(BR_8, &kp N8,        D1 D2 D5,       NUM_LAYER)
 ZMK_COMBO(BR_9, &kp N9,        D2 D4,          NUM_LAYER)
-ZMK_COMBO(BR_0, &kp N0,        D2 D4 D5,       NUM_LAYER)
-
+// zero has double meaning when typing percent
+ZMK_COMBO(BR_0, &dot_layer ADDITIONAL_LAYER N0,   D2 D4 D5,       NUM_LAYER)
 
 // "simple" symbols (no layer needed)
 ZMK_COMBO(BR_COMMA,         &kp COMMA,          D2,         BASE_LAYER)
@@ -116,34 +115,50 @@ ZMK_COMBO(BR_EXCLAMATION,   &kp EXCLAMATION,    D2 D3 D5,   BASE_LAYER)
 ZMK_COMBO(BR_LPAR,          &kp LPAR,           D2 D3 D5 D6,BASE_LAYER)
 ZMK_COMBO(BR_DOUBLE_QUOTE1, &kp DOUBLE_QUOTES,  D2 D3 D6,   BASE_LAYER)
 ZMK_COMBO(BR_DOUBLE_QUOTE2, &kp DOUBLE_QUOTES,  D3 D5 D6,   BASE_LAYER)
-//ZMK_COMBO(BR_PARAGRAPH,     &kp DOUBLE_QUOTES,  D3 D4 D6,   BASE_LAYER)
+// ZMK_COMBO(BR_PARAGRAPH,     &kp RA(LS(S)),      D3 D4 D6,   BASE_LAYER) // Collides with BR_IE - preferring that to this symbol
 ZMK_COMBO(BR_DOT,           &kp DOT,            D3,         BASE_LAYER)
 ZMK_COMBO(BR_MINUS,         &kp MINUS,          D3 D6,      BASE_LAYER)
 ZMK_COMBO(BR_APOSTROPHE,    &dot_layer DOT6_LAYER APOSTROPHE, D6, BASE_LAYER)
 
-// "complex" symbols (need a layer)
+// one shot shift
+ZMK_COMBO(BR_UPPER,  &sk LSHIFT,    D4 D6,  BASE_LAYER)
+// "complex" symbols (need one or several layers)
 ZMK_COMBO(BR_DOT4,  &sl DOT4_LAYER,  D4,      BASE_LAYER)
-ZMK_COMBO(BR_DOT45, &sl DOT45_LAYER, D4 D5,   BASE_LAYER)
-ZMK_COMBO(BR_ADDL,  &sl ADDITIONAL_LAYER, D2 D4 D5,   NUM_LAYER)
-
+// D4 D5 short press is caps word
+ZMK_BEHAVIOR(dot45_capsword, hold_tap,
+    flavor = "balanced";
+    tapping-term-ms = <280>;
+    quick-tap-ms = <125>;
+    bindings = <&sl>, <&caps_word>;
+)
+ZMK_COMBO(BR_DOT45, &dot45_capsword DOT45_LAYER 0, D4 D5,   BASE_LAYER)
+ZMK_COMBO(BR_DOT5,  &sl DOT5_LAYER,  D5,      BASE_LAYER)
 
 ZMK_COMBO(BR_DASH,      &kp MINUS,          D3 D6,       DOT6_LAYER) // Gedankenstrich
 ZMK_COMBO(BR_PIPE,      &kp PIPE,           D3 D6,       DOT5_LAYER) // Abtrennungszeichen (senkrechter Strich)
 ZMK_COMBO(BR_BRACKET,   &kp LEFT_BRACKET,   D2 D3 D5 D6, DOT6_LAYER) // Eckige Klammer auf
 ZMK_COMBO(BR_LT,        &kp LESS_THAN,      D2 D3 D5 D6, DOT5_LAYER) // Spitze Klammer auf
-ZMK_COMBO(BR_LCURLY,    &kp LEFT_BRACE      D1 D2 D3 D5 D6, DOT5_LAYER) // Geschweifte Klammer auf
-ZMK_COMBO(BR_LBRACKET,  &kp LEFT_BRACKET    D1 D2 D3 D5 D6, DOT45_LAYER) // Phonetische Klammer auf
-ZMK_COMBO(BR_RBRACKET,  &kp RIGHT_BRACKET   D2 D3 D4 D5 D6, DOT45_LAYER) // Phonetische Klammer zu
-ZMK_COMBO(BR_SLASH,     &kp SLASH           D2 D3 D4 D5 D6, DOT45_LAYER) // Phonemische Klammer auf und zu
-ZMK_COMBO(BR_SQUOTE,    &kp SINGLE_QUOTE    D3 D4,       DOT45_LAYER) // "einfaches" Anführungszeichen am Anfang
-ZMK_COMBO(BR_BACKTICK,  &kp GRAVE           D3 D4,       DOT45_LAYER) // "einfaches" Anführungszeichen am Ende
-ZMK_COMBO(BR_SLASH2,    &kp SLASH           D2,          DOT5_LAYER) // Schrägstrich
-ZMK_COMBO(BR_AMPERSAND, &kp AMPERSAND       D1 D3 D6,    DOT5_LAYER) // Et-Zeichen ("kaufmännisches Und")
-ZMK_COMBO(BR_STAR,      &kp STAR            D3 D5,       DOT6_LAYER) // Stern
-ZMK_COMBO(BR_PERCENT,   &sl ADDITIONAL_LAYER, D2 D4 D5,   NUM_LAYER)
+ZMK_COMBO(BR_LCURLY,    &kp LEFT_BRACE,     D1 D2 D3 D5 D6, DOT5_LAYER) // Geschweifte Klammer auf
+ZMK_COMBO(BR_LBRACKET,  &kp LEFT_BRACKET,   D1 D2 D3 D5 D6, DOT45_LAYER) // Phonetische Klammer auf
+ZMK_COMBO(BR_RBRACKET,  &kp RIGHT_BRACKET,  D2 D3 D4 D5 D6, DOT45_LAYER) // Phonetische Klammer zu
+ZMK_COMBO(BR_SLASH,     &kp SLASH,          D3 D4,      DOT45_LAYER) // Phonemische Klammer auf und zu
+ZMK_COMBO(BR_SQUOTE,    &kp SINGLE_QUOTE,   D2 D3 D6,   DOT6_LAYER) // "einfaches" Anführungszeichen am Anfang
+ZMK_COMBO(BR_BACKTICK,  &kp GRAVE,          D3 D5 D6,   DOT6_LAYER) // "einfaches" Anführungszeichen am Ende
+ZMK_COMBO(BR_SLASH2,    &kp SLASH,          D2,         DOT5_LAYER) // Schrägstrich
+ZMK_COMBO(BR_AMPERSAND, &kp AMPERSAND,      D1 D3 D6,   DOT5_LAYER) // Et-Zeichen ("kaufmännisches Und")
+ZMK_COMBO(BR_STAR,      &kp STAR,           D3 D5,      DOT6_LAYER) // Stern
+ZMK_COMBO(BR_PERCENT,   &kp LS(N5),         D3 D5 D6,   ADDITIONAL_LAYER) // Prozentzeichen
+ZMK_COMBO(BR_DEGREE,    &kp RA(LS(SEMI)),   D3 D5 D6,   DOT4_LAYER) // Gradzeichen
+ZMK_COMBO(BR_BACKSLASH, &kp BACKSLASH,      D3 D4,      DOT4_LAYER) // Backslash
+ZMK_COMBO(BR_AT,        &kp AT_SIGN,        D3 D4 D5,   DOT4_LAYER) // AT
+ZMK_COMBO(BR_UNDERSCORE,&kp UNDERSCORE,     D4 D5 D6,   DOT4_LAYER) // Unterstrich
+ZMK_COMBO(BR_HASH,      &kp HASH,           D3 D4 D5 D6,DOT4_LAYER) // Hash #
+ZMK_COMBO(BR_EURO,      &kp RA(N5),         D1 D5,      DOT4_LAYER)   // euro
+ZMK_COMBO(BR_DOLLAR,    &kp DOLLAR,         D2 D3 D4,   DOT4_LAYER)   // dollar
+ZMK_COMBO(BR_CENT,      &kp RA(LS(C)),      D1 D4,      DOT4_LAYER)   // dollar cent (Dollar-)Centzeichen
+ZMK_COMBO(BR_POUND,     &kp RA(LS(N4)),     D1 D2 D3,   DOT4_LAYER)   // £ Pfund- oder Lirazeichen (Währungsangaben)
 
 
 
-ZMK_COMBO(BR_EURO, &kp RA(N5),                 D1 D5,   DOT4_LAYER)   // euro sign
 
 

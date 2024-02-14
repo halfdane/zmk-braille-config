@@ -24,7 +24,8 @@ clean:
 	@$(eval WEST_PARAMS := --pristine)
 
 copy_zmk: verify-zmk
-	@echo -n "Mount the board at $(RAW_BOARD_MOUNTPOINT) and hit enter " && read ignore
+	@echo "Waiting for the board at $(RAW_BOARD_MOUNTPOINT)"
+	@until [ -d $(RAW_BOARD_MOUNTPOINT) ]; do sleep 0.5; done
 	@echo "===> Copying UF2 file to $(RAW_BOARD_MOUNTPOINT)"
 	cp $(ZMK_APP)/build/zephyr/zmk.uf2 $(RAW_BOARD_MOUNTPOINT)/
 
