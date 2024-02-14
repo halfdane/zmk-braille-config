@@ -122,9 +122,10 @@ ZMK_COMBO(BR_APOSTROPHE,    &dot_layer DOT6_LAYER APOSTROPHE, D6, BASE_LAYER)
 
 // one shot shift
 ZMK_COMBO(BR_UPPER,  &sk LSHIFT,    D4 D6,  BASE_LAYER)
-// "complex" symbols (need one or several layers)
+// additional layers for complex symbols
 ZMK_COMBO(BR_DOT4,  &sl DOT4_LAYER,  D4,      BASE_LAYER)
-// D4 D5 short press is caps word
+ZMK_COMBO(BR_DOT5,  &sl DOT5_LAYER,  D5,      BASE_LAYER)
+// D4 D5 short press is caps word, long press is layer
 ZMK_BEHAVIOR(dot45_capsword, hold_tap,
     flavor = "balanced";
     tapping-term-ms = <280>;
@@ -132,8 +133,8 @@ ZMK_BEHAVIOR(dot45_capsword, hold_tap,
     bindings = <&sl>, <&caps_word>;
 )
 ZMK_COMBO(BR_DOT45, &dot45_capsword DOT45_LAYER 0, D4 D5,   BASE_LAYER)
-ZMK_COMBO(BR_DOT5,  &sl DOT5_LAYER,  D5,      BASE_LAYER)
 
+// "complex" symbols (need one or several layers)
 ZMK_COMBO(BR_DASH,      &kp MINUS,          D3 D6,       DOT6_LAYER) // Gedankenstrich
 ZMK_COMBO(BR_PIPE,      &kp PIPE,           D3 D6,       DOT5_LAYER) // Abtrennungszeichen (senkrechter Strich)
 ZMK_COMBO(BR_BRACKET,   &kp LEFT_BRACKET,   D2 D3 D5 D6, DOT6_LAYER) // Eckige Klammer auf
