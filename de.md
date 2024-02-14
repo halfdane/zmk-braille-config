@@ -66,11 +66,6 @@ Apostroph, ', ⠠, 6
 Ankündigung eines Großbuchstabens, one shot shift, ⠨, 4 6
 Ankündigung mehrerer Großbuchstaben, CapsWord, ⠘, 4 5
 
-⠈, 4 - 
-⠐, 5 - 
-⠠, 6 - 
-⠘, 4 5 - 
-
 Gedankenstrich, -, ⠠⠤, 6 - 3 6
 Abtrennungszeichen, (senkrechter Strich), |, ⠐⠤, 5 - 3 6
 Eckige Klammer auf, [, ⠠⠶, 6 - 2 3 5 6

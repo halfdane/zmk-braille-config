@@ -5,6 +5,7 @@ SHIELD_NAME := braille
 RAW_BOARD_MOUNTPOINT := /media/tvollert/NICENANO
 export PATH := $(ZMK_DIR)/venv/bin:$(PATH)
 WEST_PARAMS := ""
+BOOTLOADER_NAME := Adafruit nRF UF2
 
 .DEFAULT: all
 
@@ -24,8 +25,8 @@ clean:
 	@$(eval WEST_PARAMS := --pristine)
 
 copy_zmk: verify-zmk
-	@echo "Waiting for the board at $(RAW_BOARD_MOUNTPOINT)"
-	@until [ -d $(RAW_BOARD_MOUNTPOINT) ]; do sleep 0.5; done
+	@echo "===> Trying to mount the board"
+	@udisksctl mount -b /dev/$$(udisksctl status | grep '$(BOOTLOADER_NAME)' | awk '{print $$NF}')
 	@echo "===> Copying UF2 file to $(RAW_BOARD_MOUNTPOINT)"
 	cp $(ZMK_APP)/build/zephyr/zmk.uf2 $(RAW_BOARD_MOUNTPOINT)/
 

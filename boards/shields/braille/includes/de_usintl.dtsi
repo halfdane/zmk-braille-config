@@ -159,7 +159,3 @@ ZMK_COMBO(BR_DOLLAR,    &kp DOLLAR,         D2 D3 D4,   DOT4_LAYER)   // dollar
 ZMK_COMBO(BR_CENT,      &kp RA(LS(C)),      D1 D4,      DOT4_LAYER)   // dollar cent (Dollar-)Centzeichen
 ZMK_COMBO(BR_POUND,     &kp RA(LS(N4)),     D1 D2 D3,   DOT4_LAYER)   // £ Pfund- oder Lirazeichen (Währungsangaben)
 
-
-
-
-
