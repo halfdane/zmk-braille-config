@@ -1,8 +1,12 @@
 // Using the de_de keymap as a base
+
 ZMK_BEHAVIOR(DE_AUML,    macro,  bindings = <&macro_tap &kp LA(U) &kp A>;)
 ZMK_BEHAVIOR(DE_OUML,    macro,  bindings = <&macro_tap &kp LA(U) &kp O>;)
 ZMK_BEHAVIOR(DE_UUML,    macro,  bindings = <&macro_tap &kp LA(U) &kp U>;)
 ZMK_BEHAVIOR(DE_SUML,    macro,  bindings = <&macro_tap &kp LA(S)>;)
+ZMK_BEHAVIOR(DE_Y,       macro,  bindings = <&macro_tap &kp Y>;)
+ZMK_BEHAVIOR(DE_Z,       macro,  bindings = <&macro_tap &kp Z>;)
+
 
 ZMK_BEHAVIOR(LAYOUT, macro, bindings = <&kp D &kp E &kp D &kp E &kp A &kp N &kp D &kp R &kp O &kp I &kp D>;)
 ZMK_COMBO(BR_LAYOUT_KEY,  &LAYOUT, D8,         BASE_LAYER)
@@ -31,8 +35,8 @@ ZMK_COMBO(BR_U,  &kp U,        D1 D3 D6,       BASE_LAYER)
 ZMK_COMBO(BR_V,  &kp V,        D1 D2 D3 D6,    BASE_LAYER)
 ZMK_COMBO(BR_W,  &kp W,        D2 D4 D5 D6,    BASE_LAYER)
 ZMK_COMBO(BR_X,  &kp X,        D1 D3 D4 D6,    BASE_LAYER)
-ZMK_COMBO(BR_Y,  &kp Y,        D1 D3 D4 D5 D6, BASE_LAYER)
-ZMK_COMBO(BR_Z,  &kp Z,        D1 D3 D5 D6,    BASE_LAYER)
+ZMK_COMBO(BR_Y,  &DE_Y,        D1 D3 D4 D5 D6, BASE_LAYER)
+ZMK_COMBO(BR_Z,  &DE_Z,        D1 D3 D5 D6,    BASE_LAYER)
 ZMK_COMBO(BR_AUML, &DE_AUML,  D3 D4 D5,       BASE_LAYER)
 ZMK_COMBO(BR_OUML, &DE_OUML,  D2 D4 D6,       BASE_LAYER)
 ZMK_COMBO(BR_UUML, &DE_UUML,  D1 D2 D5 D6,    BASE_LAYER)

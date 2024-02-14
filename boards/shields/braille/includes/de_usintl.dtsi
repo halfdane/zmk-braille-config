@@ -5,6 +5,7 @@
 // Which corresponds to the "Grade 2" Braille in English
 // Contains the 26 letters of the alphabet, the numbers, some contractions
 // and punctuation as well as some symbols
+// This file is for usage with the US International layout
 
 // `dot_layer DOT6_LAYER P` will 
 // - type the key 'P" when tapped or
@@ -21,10 +22,13 @@ ZMK_BEHAVIOR(dot_layer, hold_tap,
 };
 
 // Using the us_international keymap as a base
-ZMK_BEHAVIOR(DE_AUML,    macro,  bindings = <&macro_tap &kp RA(Q)>;)
-ZMK_BEHAVIOR(DE_OUML,    macro,  bindings = <&macro_tap &kp RA(P)>;)
-ZMK_BEHAVIOR(DE_UUML,    macro,  bindings = <&macro_tap &kp RA(Y)>;)
-ZMK_BEHAVIOR(DE_SUML,    macro,  bindings = <&macro_tap &kp RA(S)>;)
+ZMK_BEHAVIOR(DE_AUML,   macro,  bindings = <&macro_tap &kp RA(Q)>;)
+ZMK_BEHAVIOR(DE_OUML,   macro,  bindings = <&macro_tap &kp RA(P)>;)
+ZMK_BEHAVIOR(DE_UUML,   macro,  bindings = <&macro_tap &kp RA(Y)>;)
+ZMK_BEHAVIOR(DE_SUML,   macro,  bindings = <&macro_tap &kp RA(S)>;)
+ZMK_BEHAVIOR(DE_Y,      macro,  bindings = <&macro_tap &kp Y>;)
+ZMK_BEHAVIOR(DE_Z,      macro,  bindings = <&macro_tap &kp Z>;)
+
 
 // type current layout when pressing D8
 ZMK_BEHAVIOR(LAYOUT, macro, bindings = <&kp D &kp E &kp I &kp N &kp T &kp L>;)
@@ -56,8 +60,8 @@ ZMK_COMBO(BR_U,  &kp U,        D1 D3 D6,       BASE_LAYER)
 ZMK_COMBO(BR_V,  &kp V,        D1 D2 D3 D6,    BASE_LAYER)
 ZMK_COMBO(BR_W,  &kp W,        D2 D4 D5 D6,    BASE_LAYER)
 ZMK_COMBO(BR_X,  &kp X,        D1 D3 D4 D6,    BASE_LAYER)
-ZMK_COMBO(BR_Y,  &kp Y,        D1 D3 D4 D5 D6, BASE_LAYER)
-ZMK_COMBO(BR_Z,  &kp Z,        D1 D3 D5 D6,    BASE_LAYER)
+ZMK_COMBO(BR_Y,  &DE_Y,        D1 D3 D4 D5 D6, BASE_LAYER)
+ZMK_COMBO(BR_Z,  &DE_Z,        D1 D3 D5 D6,    BASE_LAYER)
 ZMK_COMBO(BR_AUML, &DE_AUML,   D3 D4 D5,       BASE_LAYER)
 ZMK_COMBO(BR_OUML, &DE_OUML,   D2 D4 D6,       BASE_LAYER)
 ZMK_COMBO(BR_UUML, &DE_UUML,   D1 D2 D5 D6,    BASE_LAYER)
@@ -104,20 +108,42 @@ ZMK_COMBO(BR_0, &kp N0,        D2 D4 D5,       NUM_LAYER)
 
 
 // "simple" symbols (no layer needed)
-
-// ZMK_COMBO(BR_COMMA,         &kp COMMA,          D2,         BASE_LAYER)
+ZMK_COMBO(BR_COMMA,         &kp COMMA,          D2,         BASE_LAYER)
 ZMK_COMBO(BR_SEMI,          &kp SEMI,           D2 D3,      BASE_LAYER)
 ZMK_COMBO(BR_COLON,         &kp COLON,          D2 D5,      BASE_LAYER)
 ZMK_COMBO(BR_QUESTION,      &kp QUESTION,       D2 D6,      BASE_LAYER)
-
 ZMK_COMBO(BR_EXCLAMATION,   &kp EXCLAMATION,    D2 D3 D5,   BASE_LAYER)
 ZMK_COMBO(BR_LPAR,          &kp LPAR,           D2 D3 D5 D6,BASE_LAYER)
 ZMK_COMBO(BR_DOUBLE_QUOTE1, &kp DOUBLE_QUOTES,  D2 D3 D6,   BASE_LAYER)
-ZMK_COMBO(BR_DOUBLE_QUOTE1, &kp DOUBLE_QUOTES,  D3 D5 D6,   BASE_LAYER)
-ZMK_COMBO(BR_QUESTION,      &kp QUESTION,       D3 D4 D6,   BASE_LAYER)
+ZMK_COMBO(BR_DOUBLE_QUOTE2, &kp DOUBLE_QUOTES,  D3 D5 D6,   BASE_LAYER)
+//ZMK_COMBO(BR_PARAGRAPH,     &kp DOUBLE_QUOTES,  D3 D4 D6,   BASE_LAYER)
 ZMK_COMBO(BR_DOT,           &kp DOT,            D3,         BASE_LAYER)
 ZMK_COMBO(BR_MINUS,         &kp MINUS,          D3 D6,      BASE_LAYER)
-ZMK_COMBO(BR_APOSTROPHE,    &kp APOSTROPHE,     D6,         BASE_LAYER)
+ZMK_COMBO(BR_APOSTROPHE,    &dot_layer DOT6_LAYER APOSTROPHE, D6, BASE_LAYER)
 
-ZMK_COMBO(BR_DOT4, &sl DOT4_LAYER,              D4,      BASE_LAYER)
-ZMK_COMBO(BR_LOL1, &kp RA(N5),                  D1 D5,   DOT4_LAYER)
+// "complex" symbols (need a layer)
+ZMK_COMBO(BR_DOT4,  &sl DOT4_LAYER,  D4,      BASE_LAYER)
+ZMK_COMBO(BR_DOT45, &sl DOT45_LAYER, D4 D5,   BASE_LAYER)
+ZMK_COMBO(BR_ADDL,  &sl ADDITIONAL_LAYER, D2 D4 D5,   NUM_LAYER)
+
+
+ZMK_COMBO(BR_DASH,      &kp MINUS,          D3 D6,       DOT6_LAYER) // Gedankenstrich
+ZMK_COMBO(BR_PIPE,      &kp PIPE,           D3 D6,       DOT5_LAYER) // Abtrennungszeichen (senkrechter Strich)
+ZMK_COMBO(BR_BRACKET,   &kp LEFT_BRACKET,   D2 D3 D5 D6, DOT6_LAYER) // Eckige Klammer auf
+ZMK_COMBO(BR_LT,        &kp LESS_THAN,      D2 D3 D5 D6, DOT5_LAYER) // Spitze Klammer auf
+ZMK_COMBO(BR_LCURLY,    &kp LEFT_BRACE      D1 D2 D3 D5 D6, DOT5_LAYER) // Geschweifte Klammer auf
+ZMK_COMBO(BR_LBRACKET,  &kp LEFT_BRACKET    D1 D2 D3 D5 D6, DOT45_LAYER) // Phonetische Klammer auf
+ZMK_COMBO(BR_RBRACKET,  &kp RIGHT_BRACKET   D2 D3 D4 D5 D6, DOT45_LAYER) // Phonetische Klammer zu
+ZMK_COMBO(BR_SLASH,     &kp SLASH           D2 D3 D4 D5 D6, DOT45_LAYER) // Phonemische Klammer auf und zu
+ZMK_COMBO(BR_SQUOTE,    &kp SINGLE_QUOTE    D3 D4,       DOT45_LAYER) // "einfaches" Anführungszeichen am Anfang
+ZMK_COMBO(BR_BACKTICK,  &kp GRAVE           D3 D4,       DOT45_LAYER) // "einfaches" Anführungszeichen am Ende
+ZMK_COMBO(BR_SLASH2,    &kp SLASH           D2,          DOT5_LAYER) // Schrägstrich
+ZMK_COMBO(BR_AMPERSAND, &kp AMPERSAND       D1 D3 D6,    DOT5_LAYER) // Et-Zeichen ("kaufmännisches Und")
+ZMK_COMBO(BR_STAR,      &kp STAR            D3 D5,       DOT6_LAYER) // Stern
+ZMK_COMBO(BR_PERCENT,   &sl ADDITIONAL_LAYER, D2 D4 D5,   NUM_LAYER)
+
+
+
+ZMK_COMBO(BR_EURO, &kp RA(N5),                 D1 D5,   DOT4_LAYER)   // euro sign
+
+

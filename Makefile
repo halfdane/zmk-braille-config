@@ -1,7 +1,7 @@
 
 ZMK_DIR := $(CURDIR)/../zmk
 ZMK_APP := $(ZMK_DIR)/app
-BOARD_NAME := braille
+SHIELD_NAME := braille
 RAW_BOARD_MOUNTPOINT := /media/tvollert/NICENANO
 export PATH := $(ZMK_DIR)/venv/bin:$(PATH)
 WEST_PARAMS := ""
@@ -17,7 +17,7 @@ verify-zmk:
 
 compile_app: verify-zmk
 	@echo "===> Compiling app $(WEST_PARAMS)"
-	@cd $(ZMK_APP) && west build $(WEST_PARAMS) -b nice_nano -- -DSHIELD=$(BOARD_NAME) -DZMK_EXTRA_MODULES="$(CURDIR)/"
+	@cd $(ZMK_APP) && west build $(WEST_PARAMS) -DZMK_EXTRA_MODULES="$(CURDIR)/"
 
 clean:
 	@echo "===> This can only be run in combination with the 'compile_app' target"
