@@ -18,11 +18,11 @@ verify-zmk:
 
 compile_app: verify-zmk
 	@echo "===> Compiling app $(WEST_PARAMS)"
-	@cd $(ZMK_APP) && west build $(WEST_PARAMS) -DZMK_EXTRA_MODULES="$(CURDIR)/"
+	@cd $(ZMK_APP) && west build $(WEST_PARAMS) -p  -b nice_nano -DSHIELD=braille -DZMK_CONFIG="$(CURDIR)/config"
 
 clean:
-	@echo "===> This can only be run in combination with the 'compile_app' target"
-	@$(eval WEST_PARAMS := --pristine)
+	@echo "===> Deleting build directory"
+	rm -rf $(ZMK_APP)/build
 
 copy_zmk: verify-zmk
 	@echo "===> Trying to mount the board"

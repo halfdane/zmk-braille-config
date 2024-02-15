@@ -1,10 +1,30 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 
+&pwm0 {
+    status = "okay";
+    pinctrl-0 = <&pwm0_default>;
+    pinctrl-1 = <&pwm0_sleep>;
+    pinctrl-names = "default", "sleep";
+    status = "okay";
+};
+
 / {
     chosen {
         zmk,kscan = &kscan0;
         zmk,matrix-transform = &default_transform;
     };
+
+    rumble: pwm_rumble {
+        compatible = "braille,pwm-rumble";
+		pwms = <&pwm0 0 1000 PWM_POLARITY_NORMAL>;
+		label = "PWM Rumble";
+		status = "okay";
+    };
+
+
+	aliases {
+		rumble = &rumble;
+	};
 
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";

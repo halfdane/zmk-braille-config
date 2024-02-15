@@ -1,1 +1,0 @@
-west build -b nice_nano -- -DSHIELD=braille -DZMK_CONFIG="/home/tvollert/halfdane/zmk-config/config"
