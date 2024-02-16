@@ -6,7 +6,7 @@
 #include <zephyr/bluetooth/services/bas.h>
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
+LOG_MODULE_REGISTER(rumbler, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zmk/ble.h>
 #include <zmk/event_manager.h>
@@ -14,94 +14,50 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #define RUMBLE_NODE DT_ALIAS(rumble)
 
-#define BEEP_DURATION  K_MSEC(60)
-
 static const struct pwm_dt_spec pwm = PWM_DT_SPEC_GET(RUMBLE_NODE);
 
-void _play(uint32_t period)
+void _on()
 {
-	if (!device_is_ready(pwm.dev)) {
-		printk("Error: PWM device %s is not ready\n",
-		       pwm.dev->name);
+    pwm_set_dt(&pwm, 0, 0);
+}
+
+void _off()
+{
+    pwm_set_dt(&pwm, 100, 100);
+}
+
+
+void rumble(const int count)
+{
+    if (!device_is_ready(pwm.dev)) {
+		LOG_ERR("Error: PWM device %s is not ready\n", pwm.dev->name);
 		return;
 	}
-    pwm_set_dt(&pwm, period, period / 2U); // attempt at new implementation
-    k_sleep(BEEP_DURATION);
-    pwm_set_dt(&pwm, 0, 0); // attempt at new implementation
-    k_sleep(K_MSEC(50));
+    for (int i = 0; i < count; i++) {
+        LOG_DBG("  Rumble %d ", i);
+        
+        _on();
+        k_sleep(K_MSEC(250));
+        _off();
+        k_sleep(K_MSEC(100));
+    }
+    LOG_DBG("DONE rumbling %d times!", count);
 }
 
-void play_sound_1()
-{
-    LOG_ERR("Playing sound 1!");
-    _play(1000000);
-    _play(500000);
-    _play(250000);
-    _play(100000);
-    _play(50000);
-}
 
-void play_sound_2()
-{
-    LOG_ERR("Playing sound 2!");
-    _play(1500000);
-    _play(3900000);
-    _play(1500000);
-    _play(1500000);
-}
-
-void play_sound_3()
-{
-    LOG_ERR("Playing sound 3!");
-    _play(1500000);
-    _play(3900000);
-}
-
-void play_sound_4()
-{
-    LOG_ERR("Playing sound 4!");
-    _play(2000000);
-    _play(3900000);
-}
-
-void play_sound_5()
-{
-    LOG_ERR("Playing sound 5!");
-    _play(2500000);
-    _play(3900000);               
-}
-
-int rumble_listener(const zmk_event_t *eh)
+int ble_active_profile_change_listener(const zmk_event_t *eh)
 {
     const struct zmk_ble_active_profile_changed *profile_ev = NULL;
     if ((profile_ev = as_zmk_ble_active_profile_changed(eh)) == NULL) {
         return ZMK_EV_EVENT_BUBBLE;
     }
-    LOG_ERR("Hello World! %s\n", CONFIG_BOARD);
-    LOG_ERR("PROFILE! %d\n", profile_ev->index);
-    switch(profile_ev->index) {
-        case 0:
-            play_sound_1();
-            break;
-        case 1:
-            play_sound_2();
-            break;
-        case 2:
-            play_sound_3();
-            break;
-        case 3:
-            play_sound_4();
-            break;
-        case 4:
-            play_sound_5();
-            break;
-        default:
-            break;
-    }
+    const int count = profile_ev->index + 1;
+    LOG_WRN("Bluetooth profile [%d] is active -> rumbling [%d] times!", profile_ev->index, count);
+    rumble(count);
     return ZMK_EV_EVENT_BUBBLE;
 }
 
-ZMK_LISTENER(rumble_output_status, rumble_listener)
+ZMK_LISTENER(ble_active_profile_change_status, ble_active_profile_change_listener)
 #if defined(CONFIG_ZMK_BLE)
-    ZMK_SUBSCRIPTION(rumble_output_status, zmk_ble_active_profile_changed);
+    ZMK_SUBSCRIPTION(ble_active_profile_change_status, zmk_ble_active_profile_changed);
 #endif

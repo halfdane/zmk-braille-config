@@ -24,9 +24,13 @@ clean:
 	@echo "===> Deleting build directory"
 	rm -rf $(ZMK_APP)/build
 
-copy_zmk: verify-zmk
+mount_board:
+	@echo "Please reset the board into bootloader mode"
+	@while [ -z "$$(udisksctl status | grep '$(BOOTLOADER_NAME)' | awk '{print $$NF}')" ]; do sleep 0.5; done
 	@echo "===> Trying to mount the board"
 	@udisksctl mount -b /dev/$$(udisksctl status | grep '$(BOOTLOADER_NAME)' | awk '{print $$NF}')
+
+copy_zmk: verify-zmk mount_board
 	@echo "===> Copying UF2 file to $(RAW_BOARD_MOUNTPOINT)"
 	cp $(ZMK_APP)/build/zephyr/zmk.uf2 $(RAW_BOARD_MOUNTPOINT)/
 
