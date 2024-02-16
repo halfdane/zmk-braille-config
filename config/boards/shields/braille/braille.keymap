@@ -105,6 +105,8 @@ ZMK_BEHAVIOR(bottom_right, tap_dance, tapping-term-ms = <TAPPING_TERM>;
 // TOP-LEFT and TOP-RIGHT together switch to bootloader mode 
 ZMK_COMBO(TL_TR_BOOTLOADER, &bootloader,  0 3, ALL)
 
+
 // BOTTOM-LEFT and BOTTOM-RIGHT together reset all bluetooth pairings
-ZMK_COMBO(BL_BR_BT_CLEAR_ALL, &bt BT_CLR_ALL,  8 11, ALL)
+ZMK_BEHAVIOR(BR_CLR_BLE, macro, bindings = <&bt BT_CLR_ALL>;)
+ZMK_COMBO(BL_BR_BT_CLEAR_ALL, &BR_CLR_BLE,  8 11, ALL)
 

@@ -1,3 +1,5 @@
+#define DT_DRV_COMPAT zmk_rumble
+
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
@@ -6,13 +8,16 @@
 #include <zephyr/bluetooth/services/bas.h>
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(rumbler, CONFIG_ZMK_LOG_LEVEL);
+LOG_MODULE_REGISTER(rumble, CONFIG_ZMK_LOG_LEVEL);
 
-#include <zmk/ble.h>
+#include <zmk/ble.h>    
 #include <zmk/event_manager.h>
 #include <zmk/events/ble_active_profile_changed.h>
 
-#define RUMBLE_NODE DT_ALIAS(rumble)
+
+#if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
+
+#define RUMBLE_NODE DT_CHOSEN(DT_DRV_COMPAT)
 
 static const struct pwm_dt_spec pwm = PWM_DT_SPEC_GET(RUMBLE_NODE);
 
@@ -61,3 +66,6 @@ ZMK_LISTENER(ble_active_profile_change_status, ble_active_profile_change_listene
 #if defined(CONFIG_ZMK_BLE)
     ZMK_SUBSCRIPTION(ble_active_profile_change_status, zmk_ble_active_profile_changed);
 #endif
+
+
+#endif /* DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT) */

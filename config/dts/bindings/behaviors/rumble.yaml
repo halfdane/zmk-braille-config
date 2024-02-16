@@ -1,6 +1,6 @@
-description: PWM Rumble node
+description: Rumble node
 
-compatible: "braille,pwm-rumble"
+compatible: "zmk,rumble"
 
 properties:
   pwms:
