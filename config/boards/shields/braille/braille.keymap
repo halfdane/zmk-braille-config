@@ -38,7 +38,7 @@
 //  comment previous and uncomment next line to flip the columns
 //#define PREFER_DOTS DOT1_ON_LEFT
 // if you want more detailled control, you can adjust the following file
-#include "includes/dots.dtsi"
+#include "includes/dots.h"
 
 
 // ************
@@ -71,9 +71,8 @@ ZMK_LAYER(BR_ADDITIONAL_LAYER, &trans)
 //    LANGUAGE / LAYOUT
 // ***********************
 // include the language
-// #include "includes/de_de_android.dtsi"
-#include "includes/de_de.dtsi"
-// #include "includes/de_usintl.dtsi"
+#include "includes/de_de.h"
+// #include "includes/de_usintl.h"
 
 
 // ******************       
