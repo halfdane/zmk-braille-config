@@ -1,9 +1,7 @@
-#define DT_DRV_COMPAT zmk_rumble
-
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
-#include <zephyr/drivers/pwm.h>
+#include <zephyr/drivers/gpio.h>
 
 #include <zephyr/bluetooth/services/bas.h>
 
@@ -15,36 +13,37 @@ LOG_MODULE_REGISTER(rumble, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/events/ble_active_profile_changed.h>
 
 
-#if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
+/* The devicetree node identifier for the "rumble" alias. */
+#define RUMBLE_NODE	DT_ALIAS(rumble)
+#if !DT_NODE_HAS_STATUS(RUMBLE_NODE, okay)
+#error "Unsupported board: rumbler devicetree alias is not defined or not okay"
+#endif
 
-#define RUMBLE_NODE DT_CHOSEN(DT_DRV_COMPAT)
+static const struct gpio_dt_spec rmbl = GPIO_DT_SPEC_GET(RUMBLE_NODE, gpios);
 
-static const struct pwm_dt_spec pwm = PWM_DT_SPEC_GET(RUMBLE_NODE);
-
-void _on()
+void brr()
 {
-    pwm_set_dt(&pwm, 0, 0);
+    gpio_pin_toggle_dt(&rmbl);
+    k_msleep(250);
+    gpio_pin_toggle_dt(&rmbl);
+    k_msleep(50);
 }
-
-void _off()
-{
-    pwm_set_dt(&pwm, 100, 100);
-}
-
 
 void rumble(const int count)
 {
-    if (!device_is_ready(pwm.dev)) {
-		LOG_ERR("Error: PWM device %s is not ready\n", pwm.dev->name);
+    if (!gpio_is_ready_dt(&rmbl)) {
+		LOG_ERR("Error: rumble device %d is not ready\n", rmbl.pin);
 		return;
 	}
+
+	if (gpio_pin_configure_dt(&rmbl, GPIO_OUTPUT_ACTIVE) < 0) {
+        LOG_ERR("Error: Couldn't activate rumble device %d\n", rmbl.pin);
+		return;
+	}
+
     for (int i = 0; i < count; i++) {
         LOG_DBG("  Rumble %d ", i);
-        
-        _on();
-        k_sleep(K_MSEC(250));
-        _off();
-        k_sleep(K_MSEC(100));
+        brr();
     }
     LOG_DBG("DONE rumbling %d times!", count);
 }
@@ -66,6 +65,3 @@ ZMK_LISTENER(ble_active_profile_change_status, ble_active_profile_change_listene
 #if defined(CONFIG_ZMK_BLE)
     ZMK_SUBSCRIPTION(ble_active_profile_change_status, zmk_ble_active_profile_changed);
 #endif
-
-
-#endif /* DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT) */

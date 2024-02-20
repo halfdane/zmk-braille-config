@@ -1,5 +1,3 @@
 config SHIELD_BRAILLE
     def_bool $(shields_list_contains,braille)
 
-config PWM
-    default y

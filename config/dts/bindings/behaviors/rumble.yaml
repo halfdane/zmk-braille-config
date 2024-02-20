@@ -1,13 +1,10 @@
-description: Rumble node
+description: GPIO pin to switch a power output on or off
 
-compatible: "zmk,rumble"
+compatible: "power-switch"
 
 properties:
-  pwms:
+  gpios:
     type: phandle-array
     required: true
-
-  label:
-    required: false
-    type: string
-    description: Human readable string describing the device (used as device_get_binding() argument)
+    description: |
+      The GPIO connected to the gate driver for the MOSFET.
