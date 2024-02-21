@@ -18,11 +18,11 @@ verify-zmk:
 
 compile_app: verify-zmk
 	@echo "===> Compiling app $(WEST_PARAMS)"
-	@cd $(ZMK_APP) && west build $(WEST_PARAMS) -p  -b nice_nano -DSHIELD=braille -DZMK_EXTRA_MODULES="$(CURDIR)/"
+	@west build -p -s zmk/app -b "nice_nano" -- -DSHIELD="braille" -DZMK_CONFIG="$(CURDIR)/config"
 
 clean:
 	@echo "===> Deleting build directory"
-	rm -rf $(ZMK_APP)/build
+	rm -rf build
 
 mount_board:
 	@echo "Please reset the board into bootloader mode"
