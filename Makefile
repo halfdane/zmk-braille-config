@@ -18,7 +18,7 @@ verify-zmk:
 
 compile_app: verify-zmk
 	@echo "===> Compiling app $(WEST_PARAMS)"
-	@cd $(ZMK_APP) && west build $(WEST_PARAMS) -p  -b nice_nano -DSHIELD=braille -DZMK_CONFIG="$(CURDIR)/config"
+	@cd $(ZMK_APP) && west build $(WEST_PARAMS) -p  -b nice_nano -DSHIELD=braille -DZMK_EXTRA_MODULES="$(CURDIR)/"
 
 clean:
 	@echo "===> Deleting build directory"

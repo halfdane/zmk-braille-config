@@ -7,7 +7,7 @@
 / {
     behaviors {
         /omit-if-no-ref/ rmbl: rmbl {
-            compatible = "zmk,rmbl";
+            compatible = "zmk,rumble";
             #binding-cells = <1>;
             bindings = <&kp>;
         };
