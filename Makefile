@@ -1,11 +1,16 @@
 
-ZMK_DIR := $(CURDIR)/../zmk
+ZMK_DIR := $(CURDIR)/zmk
 ZMK_APP := $(ZMK_DIR)/app
 SHIELD_NAME := braille
 RAW_BOARD_MOUNTPOINT := /media/tvollert/NICENANO
-export PATH := $(ZMK_DIR)/venv/bin:$(PATH)
-WEST_PARAMS := ""
 BOOTLOADER_NAME := Adafruit nRF UF2
+BUILD := build
+
+ifeq ($(wildcard zephyr/scripts/requirements.txt),) 
+	REQUIREMENTS_TXT = requirements.txt
+else 
+	REQUIREMENTS_TXT = zephyr/scripts/requirements.txt
+endif
 
 .DEFAULT: all
 
@@ -13,16 +18,28 @@ BOOTLOADER_NAME := Adafruit nRF UF2
 
 all: compile_app copy_zmk
 
+setup: venv
+	$(VENV)/west init -l config
+	$(VENV)/west update
+	$(VENV)/west zephyr-export
+
 verify-zmk:
 	@ls $(ZMK_APP) >/dev/null 2>&1 || ( echo "Expected zmk code at $(ZMK_APP), but didn't find anything" && exit 1 )	
 
-compile_app: verify-zmk
-	@echo "===> Compiling app $(WEST_PARAMS)"
-	@west build -p -s zmk/app -b "nice_nano" -- -DSHIELD="braille" -DZMK_CONFIG="$(CURDIR)/config"
+compile_app: verify-zmk venv
+	@echo "===> Compiling app"
+	@$(VENV)/west build -p -s $(ZMK_APP) -b "nice_nano" -- -DSHIELD="braille" -DZMK_CONFIG="$(CURDIR)/config"
 
 clean:
-	@echo "===> Deleting build directory"
-	rm -rf build
+	@echo "===> Deleting build directory $(BUILD)"
+	rm -rf $(BUILD)
+
+deep_clean: clean clean-venv
+	rm -rf zmk
+	rm -rf zephyr
+	rm -rf .west
+	rm -rf modules
+
 
 mount_board:
 	@echo "Please reset the board into bootloader mode"
@@ -32,7 +49,11 @@ mount_board:
 
 copy_zmk: verify-zmk mount_board
 	@echo "===> Copying UF2 file to $(RAW_BOARD_MOUNTPOINT)"
-	cp $(ZMK_APP)/build/zephyr/zmk.uf2 $(RAW_BOARD_MOUNTPOINT)/
+	cp $(BUILD)/zephyr/zmk.uf2 $(RAW_BOARD_MOUNTPOINT)/
 
 follow:
 	tio --baudrate 115200 /dev/ttyACM0
+
+
+
+include Makefile.venv

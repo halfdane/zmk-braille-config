@@ -1,4 +1,5 @@
 .west
+.venv
 build
 louis
 zephyr
