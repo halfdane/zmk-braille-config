@@ -1,11 +1,11 @@
-
-ZMK_DIR := $(CURDIR)/zmk
-ZMK_APP := $(ZMK_DIR)/app
+ZMK_APP := $(CURDIR)/zmk/app
 SHIELD_NAME := braille
-RAW_BOARD_MOUNTPOINT := /media/tvollert/NICENANO
+RAW_BOARD_MOUNTPOINT := /media/$(USER)/NICENANO
 BOOTLOADER_NAME := Adafruit nRF UF2
 BUILD := build
 
+# check if zephyr has already been cloned - use their requirements.txt.
+# if not, use our own as fallback - it's just to install `west`
 ifeq ($(wildcard zephyr/scripts/requirements.txt),) 
 	REQUIREMENTS_TXT = requirements.txt
 else 
@@ -14,20 +14,20 @@ endif
 
 .DEFAULT: all
 
-.PHONY: compile_app copy_zmk clean
+.PHONY: all update setup verify-zmk compile_app copy_zmk clean deep_clean mount_board follow
 
 all: compile_app copy_zmk
 
-init: .west
-.west:
+west_init: .west
+.west: venv
 	@echo "===> Initializing west"
-	@west init -l config
+	@$(VENV)/west init -l config
 
-update: init
+west_update: west_init venv
 	$(VENV)/west update
 	$(VENV)/west zephyr-export
 
-setup: venv init update
+west_setup: venv west_init west_update
 
 verify-zmk:
 	@ls $(ZMK_APP) >/dev/null 2>&1 || ( echo "Expected zmk code at $(ZMK_APP), but didn't find anything" && exit 1 )	
@@ -45,6 +45,7 @@ deep_clean: clean clean-venv
 	rm -rf zephyr
 	rm -rf .west
 	rm -rf modules
+	rm -rf zmk-behavior-haptic-feedback
 
 
 mount_board:
