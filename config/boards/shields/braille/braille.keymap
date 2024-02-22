@@ -48,7 +48,6 @@
 // if you want more detailled control, you can adjust the following file
 #include "includes/dots.h"
 
-
 // ************
 //    LAYERS
 // ************
@@ -81,6 +80,14 @@ ZMK_LAYER(BR_SETTINGS_LAYER, &trans)
 ZMK_LAYER(BR_NAVIGATION_LAYER, &trans)
 #define BR_NAVIGATION_LAYER 8
 
+/ {
+    behaviors {
+        brr: haptic_feedback {
+            compatible = "zmk,behavior-haptic-feedback";
+            #binding-cells = <1>;
+        };
+    };
+};
 
 // ***********************
 //    LANGUAGE / LAYOUT
@@ -88,7 +95,6 @@ ZMK_LAYER(BR_NAVIGATION_LAYER, &trans)
 // include the language
 #include "includes/de_de.h"
 // #include "includes/de_usintl.h"
-
 
 // ******************       
 //    SPECIAL KEYS
@@ -113,15 +119,19 @@ ZMK_BEHAVIOR(entesc, mod_morph, mods = <(MOD_LALT)>; bindings = <&mt LSHIFT ENTE
 ZMK_COMBO(BR_BR_KEY,  &entesc, BL, BASE_LAYER)
 
 // BOTTOM-LEFT and BOTTOM-RIGHT together switch to settings layer
-ZMK_COMBO(BL_BR_SETTINGS_LAYER, &to BR_SETTINGS_LAYER,  BL BR, BASE_LAYER)
+ZMK_BEHAVIOR(BR_TO_SETTINGS_LAYER, macro, bindings = <&to BR_SETTINGS_LAYER &brr 2>;)
+ZMK_COMBO(BL_BR_SETTINGS_LAYER, &BR_TO_SETTINGS_LAYER,  BL BR, BASE_LAYER)
 // TOP-LEFT and TOP-RIGHT together switch to navigation layer
-ZMK_COMBO(TL_TR_SETTINGS_LAYER, &to BR_NAVIGATION_LAYER,  TL TR, BASE_LAYER)
+ZMK_BEHAVIOR(BR_TO_NAVIGATION_LAYER, macro, bindings = <&to BR_NAVIGATION_LAYER &brr 2>;)
+ZMK_COMBO(TL_TR_SETTINGS_LAYER, &BR_TO_NAVIGATION_LAYER,  TL TR, BASE_LAYER)
 
+
+ZMK_BEHAVIOR(BR_TO_BASE_LAYER, macro, bindings = <&to BASE_LAYER &brr 1>;)
 // ********************
 //    SETTINGS LAYER
 // ********************
 // both bottom keys return to base layer
-ZMK_COMBO(BR_SETTINGS_BACK_TO_BASE, &to BASE_LAYER,  BL BR, BR_SETTINGS_LAYER)
+ZMK_COMBO(BR_SETTINGS_BACK_TO_BASE, &BR_TO_BASE_LAYER,  BL BR, BR_SETTINGS_LAYER)
 // top left: previous bluetooth profile
 ZMK_COMBO(BR_SETTINGS_BT_PREV, &bt BT_PRV,  TL, BR_SETTINGS_LAYER)
 // top right: next bluetooth profile
@@ -136,7 +146,7 @@ ZMK_COMBO(BR_SETTINGS_BOOTLOADER, &bootloader,  D1 D4, BR_SETTINGS_LAYER)
 //    NAVIGATION LAYER
 // **********************
 // both top keys return to base layer
-ZMK_COMBO(BR_NAVIGATION_BACK_TO_BASE, &to BASE_LAYER,  TL TR, BR_NAVIGATION_LAYER)
+ZMK_COMBO(BR_NAVIGATION_BACK_TO_BASE, &BR_TO_BASE_LAYER,  TL TR, BR_NAVIGATION_LAYER)
 
 ZMK_COMBO(navigate_to_next_item, &kp LA(RIGHT),  TL, BR_NAVIGATION_LAYER)
 ZMK_COMBO(navigate_to_previous_item, &kp LA(LEFT),  TR, BR_NAVIGATION_LAYER)

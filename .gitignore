@@ -5,3 +5,5 @@ louis
 zephyr
 zmk
 modules
+zmk-behavior-key-tempo
+zmk-behavior-haptic-feedback
