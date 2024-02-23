@@ -2,6 +2,8 @@
 A 10 keys ortholinear mini-keyboard that connects via bluetooth.
 Pressing the central six keys in braille patterns will send the corresponding keypresses to the host.
 
+Find an example case in the directory [`case`](case)
+
 ## Features
 - All german letters, numbers and symbols of grade 1
 - Connects to up to five bluetooth hosts which can be changed on the fly
