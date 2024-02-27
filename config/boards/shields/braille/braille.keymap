@@ -20,11 +20,6 @@
 // time window for combos to activate
 #define COMBO_TERM 100
 
-#define TL 0
-#define TR 3
-#define BL 8
-#define BR 11
-
 #include "../helper.h"
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -42,6 +37,10 @@
 #define DOT1_ON_LEFT 1
 #define DOT1_ON_RIGHT 2
 #define PREFER_DOTS DOT1_ON_RIGHT
+
+#define USB_ON_TOP 1
+#define USB_ON_BOTTOM 2
+#define USB_PORT_POSITION USB_ON_BOTTOM
 
 //  comment previous and uncomment next line to flip the columns
 //#define PREFER_DOTS DOT1_ON_LEFT
