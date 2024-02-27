@@ -98,12 +98,13 @@ ZMK_LAYER(BR_NAVIGATION_LAYER, &trans)
 // ******************       
 //    SPECIAL KEYS
 // ******************
-// TOP-LEFT: tap: right / hold: Control
+// TOP-RIGHT: tap: right / hold: Control
 // hold tl and tap tr: up
 ZMK_BEHAVIOR(rightup, mod_morph, mods = <(MOD_RALT)>; bindings = <&mt LCTRL RIGHT>, <&kp UP>; )
 ZMK_COMBO(BR_TL_KEY,  &rightup, TL, BASE_LAYER)
 
-// TOP-RIGHT: tap: left / hold: RAlt
+// TOP-LEFT: tap: left / hold: RAlt
+// hold tr and tap tl: down
 ZMK_BEHAVIOR(leftdown, mod_morph, mods = <(MOD_LCTL)>; bindings = <&mt RALT LEFT>, <&kp DOWN>; )
 ZMK_COMBO(BR_TR_KEY,  &leftdown, TR, BASE_LAYER)
 
