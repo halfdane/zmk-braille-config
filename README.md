@@ -32,3 +32,12 @@ Run `make` or `make all` to compile the firmware and copy it to your NICENANO.
 `make follow` invokes the `tio` command to watch log messages fly by. It's lovely 🤗
 
 ## Roadmap
+- build another prototype with
+    - xiao ble (instead of half broken nice!nano)
+    - 3d print a case (instead of using massive amounts of hot glue)
+    - a proper rumble motor (instead of soldering metal to the axis of a small motor)
+    - direct pin instead of a matrix (no diodes)
+        - find out about the deep-sleep implications
+    - batteries (instead of using a power bank because the loading circuit was fried years ago)
+- try to combine the braille tables of liblouis with CLDR keyboard descriptions to automatically generate languages
+- activating the rumble motor is currently blocking the main thread - make it concurrent
