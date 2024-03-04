@@ -2,19 +2,6 @@
 
 / {
     chosen {
-        zmk,behavior-haptic-feedback = &hapticfeedback;
-    };
-
-    gpio_config {
-        compatible = "gpio-leds";
-        hapticfeedback: hapticfeedback {
-            gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
-        };
-    };
-};
-
-/ {
-    chosen {
         zmk,kscan = &kscan0;
         zmk,matrix-transform = &default_transform;
     };
@@ -23,7 +10,7 @@
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
 
-// nice nano pins:
+// xiao pins:
 //    rows = 0_31, 0_29, 0_02
 //    cols = 0_10, 1_11, 1_13, 1_15  
 
