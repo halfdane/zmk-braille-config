@@ -1,5 +1,5 @@
 ZMK_APP := $(CURDIR)/zmk/app
-SHIELD_NAME := braille
+SHIELD_NAME := braille_v1
 RAW_BOARD_MOUNTPOINT := /media/$(USER)/NICENANO
 BOOTLOADER_NAME := Adafruit nRF UF2
 BUILD := build
