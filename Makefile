@@ -1,5 +1,5 @@
 ZMK_APP := $(CURDIR)/zmk/app
-SHIELD_NAME := braille_v1
+SHIELD_NAME := toco_rev1
 RAW_BOARD_MOUNTPOINT := /media/$(USER)/NICENANO
 BOOTLOADER_NAME := Adafruit nRF UF2
 BUILD := build
@@ -34,7 +34,7 @@ verify-zmk:
 
 compile_app: verify-zmk venv
 	@echo "===> Compiling app"
-	@$(VENV)/west build -p -s $(ZMK_APP) -b "nice_nano" -- -DSHIELD="braille" -DZMK_CONFIG="$(CURDIR)/config"
+	@$(VENV)/west build -p -s $(ZMK_APP) -b "nice_nano" -- -DSHIELD="$(SHIELD_NAME)" -DZMK_CONFIG="$(CURDIR)/config"
 
 clean:
 	@echo "===> Deleting build directory $(BUILD)"

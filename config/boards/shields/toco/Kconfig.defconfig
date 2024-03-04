@@ -1,0 +1,3 @@
+config SHIELD_TOCO
+    def_bool $(shields_list_contains,toco)
+

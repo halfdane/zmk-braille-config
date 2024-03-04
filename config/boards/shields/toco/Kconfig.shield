@@ -1,0 +1,6 @@
+if SHIELD_TOCO
+
+config ZMK_KEYBOARD_NAME
+    default "Toco"
+
+endif

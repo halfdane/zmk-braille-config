@@ -1,6 +1,0 @@
-if SHIELD_BRAILLE_V1
-
-config ZMK_KEYBOARD_NAME
-    default "Braille_V1"
-
-endif
