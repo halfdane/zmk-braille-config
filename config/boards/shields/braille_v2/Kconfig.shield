@@ -1,6 +1,6 @@
-if SHIELD_BRAILLE
+if SHIELD_BRAILLE_V2
 
 config ZMK_KEYBOARD_NAME
-    default "Braille"
+    default "Braille_V2"
 
 endif

@@ -1,6 +1,6 @@
 file_format: "1"
-id: braille
-name: halfdane's braille board 
+id: braille_v1
+name: halfdane's braille board (version 1)
 type: shield
 url: none
 requires: [pro_micro]
