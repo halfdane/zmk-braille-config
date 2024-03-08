@@ -49,10 +49,22 @@ DOT_TO_HEX = {
     'DOTF': 0x4000,
 }
 
+def static_init(cls):
+    if getattr(cls, "static_init", None):
+        cls.static_init()
+    return cls
 
+@static_init
 class BrailleDot:
+
+    @classmethod
+    def static_init(cls):
+        for k,v in DOTS.items():
+            setattr(cls, v, v)
+
     def __init__(self, dot):
         self.dot = DOTS[dot]
+        self.short = dot
 
     def is_virtual(self):
         return self.dot in VIRTUAL_DOTS
@@ -65,6 +77,9 @@ class BrailleDot:
             return BrailleDot(char)
         except KeyError:
             raise ValueError(f"Invalid character {char}")
+        
+    def short_str(self):
+        return self.short
 
     def __str__(self):
         return self.dot
@@ -104,6 +119,9 @@ class BrailleChar:
     
     def has_virtual_dots(self):
         return any(dot.is_virtual() for dot in self.dots)
+    
+    def short_str(self):
+        return ''.join(dot.short_str() for dot in self.dots)
 
     def __str__(self):
         return f"[{', '.join(str(dot) for dot in self.dots)}]"
@@ -134,6 +152,9 @@ class BrailleChars:
 
     def to_unicode(self):
         return ''.join(char.to_unicode() for char in self.chars)
+    
+    def short_str(self):
+        return '-'.join(char.short_str() for char in self.chars)
     
     def __str__(self):
         return f"[{', '.join(str(char) for char in self.chars)}]"
