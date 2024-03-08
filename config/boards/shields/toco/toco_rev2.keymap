@@ -10,7 +10,7 @@
 
         default_layer {
             bindings = <
-                &bootloader  &kp A  &kp C  &out OUT_BLE
+                &bootloader  &kp A  &bt BT_CLR_ALL  &out OUT_BLE
             >;
         };
     };
