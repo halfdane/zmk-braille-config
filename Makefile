@@ -1,7 +1,9 @@
 ZMK_APP := $(CURDIR)/zmk/app
-SHIELD_NAME := toco_rev1
-RAW_BOARD_MOUNTPOINT := /media/$(USER)/NICENANO
+SHIELD_NAME ?= toco_rev1
+BOARD_NAME ?= nice_nano
+MOUNTPOINT_NAME ?= NICENANO
 BOOTLOADER_NAME := Adafruit nRF UF2
+RAW_BOARD_MOUNTPOINT := /media/$(USER)/$(MOUNTPOINT_NAME)
 BUILD := build
 
 # check if zephyr has already been cloned - use their requirements.txt.
@@ -18,6 +20,13 @@ endif
 
 all: compile_app copy_zmk
 
+rev1:
+	SHIELD_NAME=toco_rev1 BOARD_NAME=nice_nano MOUNTPOINT_NAME=NICENANO $(MAKE) all
+
+rev2:
+	SHIELD_NAME=toco_rev2 BOARD_NAME=seeeduino_xiao_ble MOUNTPOINT_NAME=XIAO-SENSE $(MAKE) all
+
+
 west_init: .west
 .west: venv
 	@echo "===> Initializing west"
@@ -33,8 +42,8 @@ verify-zmk:
 	@ls $(ZMK_APP) >/dev/null 2>&1 || ( echo "Expected zmk code at $(ZMK_APP), but didn't find anything" && exit 1 )	
 
 compile_app: verify-zmk venv
-	@echo "===> Compiling app"
-	@$(VENV)/west build -p -s $(ZMK_APP) -b "nice_nano" -- -DSHIELD="$(SHIELD_NAME)" -DZMK_CONFIG="$(CURDIR)/config"
+	@echo "===> Compiling app "
+	@$(VENV)/west build -p -s $(ZMK_APP) -b "$(BOARD_NAME)" -- -DSHIELD="$(SHIELD_NAME)" -DZMK_CONFIG="$(CURDIR)/config"
 
 clean:
 	@echo "===> Deleting build directory $(BUILD)"

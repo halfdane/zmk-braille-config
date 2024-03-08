@@ -20,3 +20,5 @@
 include:
   - board: nice_nano
     shield: toco_rev1
+  - board: seeeduino_xiao_ble
+    shield: toco_rev2
