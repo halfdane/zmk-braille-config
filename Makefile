@@ -14,17 +14,18 @@ else
 	REQUIREMENTS_TXT = zephyr/scripts/requirements.txt
 endif
 
-.DEFAULT: all
+.DEFAULT: rev2
 
 .PHONY: all update setup verify-zmk compile_app copy_zmk clean deep_clean mount_board follow
+
+rev2:
+	SHIELD_NAME=toco_rev2 BOARD_NAME=seeeduino_xiao_ble MOUNTPOINT_NAME=XIAO-SENSE $(MAKE) all
 
 all: compile_app copy_zmk
 
 rev1:
 	SHIELD_NAME=toco_rev1 BOARD_NAME=nice_nano MOUNTPOINT_NAME=NICENANO $(MAKE) all
 
-rev2:
-	SHIELD_NAME=toco_rev2 BOARD_NAME=seeeduino_xiao_ble MOUNTPOINT_NAME=XIAO-SENSE $(MAKE) all
 
 
 west_init: .west

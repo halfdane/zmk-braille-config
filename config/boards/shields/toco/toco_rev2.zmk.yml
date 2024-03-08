@@ -1,8 +1,8 @@
 file_format: "1"
-id: toco_rev1
-name: the toco: halfdane's braille board (version 1)
+id: toco_rev2
+name: the toco: halfdane's braille board (version 2)
 type: shield
 url: none
-requires: [pro_micro]
+requires: [seeeduino_xiao_ble]
 features:
   - keys
