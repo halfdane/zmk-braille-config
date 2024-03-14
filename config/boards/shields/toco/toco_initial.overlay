@@ -14,3 +14,16 @@
     };
 
 };
+
+/ {
+    chosen {
+        zmk,behavior-haptic-feedback = &hapticfeedback;
+    };
+
+    gpio_config {
+        compatible = "gpio-leds";
+        hapticfeedback: hapticfeedback {
+            gpios = <&xiao_d 0 GPIO_ACTIVE_LOW>;
+        };
+    };
+};
