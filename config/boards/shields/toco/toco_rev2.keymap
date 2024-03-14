@@ -19,13 +19,16 @@
 //  │  BL         BR  │
 //  ╰─────────────────╯
 
+ZMK_BEHAVIOR(BR_BOOTLOADER, macro, bindings = <&brr 2 &bootloader>;)
+
 // short press Z, long press bootloader
 ZMK_BEHAVIOR(kp_bootloader, hold_tap,
     flavor = "balanced";
     tapping-term-ms = <280>;
     quick-tap-ms = <125>;
-    bindings = <&bootloader>, <&kp>;
+    bindings = <&BR_BOOTLOADER>, <&kp>;
 )
+
 
 / {
     keymap {
@@ -37,8 +40,17 @@ ZMK_BEHAVIOR(kp_bootloader, hold_tap,
                     &kp C   &kp D
                     &kp E   &kp F
                     &kp G   &kp H
-                &kp I               &kp_bootloader 0 J
+                &brr  2         &kp_bootloader 0 J
             >;
+        };
+    };
+};
+
+/ {
+    behaviors {
+        brr: haptic_feedback {
+            compatible = "zmk,behavior-haptic-feedback";
+            #binding-cells = <1>;
         };
     };
 };
