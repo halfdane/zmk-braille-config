@@ -23,11 +23,6 @@ ZMK_BEHAVIOR(dot_layer, hold_tap,
     release-after-ms = <5000>;
 };
 
-// type current layout when pressing D8
-ZMK_BEHAVIOR(LAYOUT, macro, bindings = <&kp D &kp E &kp D &kp E>;)
-ZMK_COMBO(BR_LAYOUT_KEY,  &LAYOUT, D8,         BASE_LAYER)
-
-
 // alphabet
 ZMK_COMBO(BR_A,  &kp DE_A,        D1,             BASE_LAYER)
 ZMK_COMBO(BR_B,  &kp DE_B,        D1 D2,          BASE_LAYER)
