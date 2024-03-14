@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "project")(type "KiCad")(uri "/home/tvollert/halfdane/zmk-braille-config/kikad/toco_rev2")(options "")(descr ""))
+)
