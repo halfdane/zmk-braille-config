@@ -36,7 +36,7 @@ west_init: .west
 	@echo "===> Initializing west"
 	@$(VENV)/west init -l config
 
-west_update: west_init venv
+west_update: venv
 	$(VENV)/west update
 	$(VENV)/west zephyr-export
 
