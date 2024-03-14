@@ -34,3 +34,12 @@ ZMK_BEHAVIOR(kp_bootloader, hold_tap,
         };
     };
 };
+
+/ {
+    behaviors {
+        brr: haptic_feedback {
+            compatible = "zmk,behavior-haptic-feedback";
+            #binding-cells = <1>;
+        };
+    };
+};
