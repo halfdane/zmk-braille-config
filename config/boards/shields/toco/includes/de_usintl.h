@@ -30,11 +30,6 @@ ZMK_BEHAVIOR(DE_Y,      macro,  bindings = <&macro_tap &kp Y>;)
 ZMK_BEHAVIOR(DE_Z,      macro,  bindings = <&macro_tap &kp Z>;)
 
 
-// type current layout when pressing D8
-ZMK_BEHAVIOR(LAYOUT, macro, bindings = <&kp D &kp E &kp I &kp N &kp T &kp L>;)
-ZMK_COMBO(BR_LAYOUT_KEY,  &LAYOUT, D8,         BASE_LAYER)
-
-
 // alphabet
 ZMK_COMBO(BR_A,  &kp A,        D1,             BASE_LAYER)
 ZMK_COMBO(BR_B,  &kp B,        D1 D2,          BASE_LAYER)
