@@ -150,7 +150,6 @@ ZMK_COMBO(BR_SETTINGS_BT_CLEAR_ALL, &bt BT_CLR_ALL,  TL TR, BR_SETTINGS_LAYER)
 // D1 and D4: switch to bootloader mode
 ZMK_COMBO(BR_SETTINGS_BOOTLOADER, &bootloader,  D1 D4, BR_SETTINGS_LAYER)
 
-ZMK_COMBO(lol_wut, &kp A,  D2 D5, BR_SETTINGS_LAYER)
 
 // **********************
 //    NAVIGATION LAYER

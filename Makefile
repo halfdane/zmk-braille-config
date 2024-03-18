@@ -40,8 +40,6 @@ west_update: venv
 	$(VENV)/west update
 	$(VENV)/west zephyr-export
 
-west_setup: venv west_init west_update
-
 verify-zmk:
 	@ls $(ZMK_APP) >/dev/null 2>&1 || ( echo "Expected zmk code at $(ZMK_APP), but didn't find anything" && exit 1 )	
 

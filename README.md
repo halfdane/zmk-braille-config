@@ -7,15 +7,16 @@ Find an example case in the directory [`case`](case)
 ## Features
 - All german letters, numbers and symbols of grade 1
 - Connects to up to five bluetooth hosts which can be changed on the fly
-- [Haptic feedback](#haptic-feedback) for bluetooth functions
+- [Haptic feedback](#haptic-feedback)
 - Supports the complete german "Vollschrift" (i.e. grade 1): [patterns](de.md)
 - Reset into bootloader mode for firmware updates
+- Case can be 3D-printed
+- rev2 (default) uses direct pin - so diodes aren't necessary for the matrix
 
 ## Missing Features
 - No math mode
 - No other languages
-- Settings etc. are confusing
-
+- Settings and Navigation etc. are confusing and undocumented
 
 ## Haptic Feedback
 Uses the https://github.com/halfdane/zmk-behavior-haptic-feedback module to make a vibration motor go brr.
@@ -32,12 +33,14 @@ Run `make` or `make all` to compile the firmware and copy it to your NICENANO.
 `make follow` invokes the `tio` command to watch log messages fly by. It's lovely 🤗
 
 ## Roadmap
-- build another prototype with
-    - xiao ble (instead of half broken nice!nano)
-    - 3d print a case (instead of using massive amounts of hot glue)
-    - a proper rumble motor (instead of soldering metal to the axis of a small motor)
-    - direct pin instead of a matrix (no diodes)
-        - find out about the deep-sleep implications
-    - batteries (instead of using a power bank because the loading circuit was fried years ago)
+- build an MVC with
+    - [x] xiao ble (instead of half broken nice!nano)
+    - [x] 3d print a case (instead of using massive amounts of hot glue)
+    - [x] a proper rumble motor (instead of soldering metal to the axis of a small motor)
+    - [x] direct pin instead of a matrix (no diodes)
+    - [x] batteries (instead of using a power bank because the loading circuit was fried years ago)
 - try to combine the braille tables of liblouis with CLDR keyboard descriptions to automatically generate languages
-- activating the rumble motor is currently blocking the main thread - make it concurrent
+- [x] activating the rumble motor is currently blocking the main thread - make it concurrent
+- create a '1.0' version ("slimline")
+    - smd components on a tiny pcb
+    - repairable case (esp. openable)
