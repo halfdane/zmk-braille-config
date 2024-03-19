@@ -24,6 +24,7 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <behaviors/behavior_haptic_feedback.dtsi>
 #include "../helper.h"
 &mt {
     tapping-term-ms = <TAPPING_TERM>;
@@ -86,15 +87,6 @@ ZMK_LAYER(BR_SETTINGS_LAYER, &trans)
 
 ZMK_LAYER(BR_NAVIGATION_LAYER, &trans)
 #define BR_NAVIGATION_LAYER 8
-
-/ {
-    behaviors {
-        brr: haptic_feedback {
-            compatible = "zmk,behavior-haptic-feedback";
-            #binding-cells = <1>;
-        };
-    };
-};
 
 // ***********************
 //    LANGUAGE / LAYOUT
