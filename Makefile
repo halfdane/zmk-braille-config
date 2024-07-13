@@ -45,7 +45,7 @@ verify-zmk:
 
 compile_app: verify-zmk venv
 	@echo "===> Compiling app "
-	@$(VENV)/west build -p -s $(ZMK_APP) -b "$(BOARD_NAME)" -- -DSHIELD="$(SHIELD_NAME)" -DZMK_CONFIG="$(CURDIR)/config"
+	@$(VENV)/west build -p -s $(ZMK_APP) -b "$(BOARD_NAME)" -S zmk-usb-logging -- -DSHIELD="$(SHIELD_NAME)" -DZMK_CONFIG="$(CURDIR)/config"
 
 clean:
 	@echo "===> Deleting build directory $(BUILD)"
